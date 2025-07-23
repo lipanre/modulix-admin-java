@@ -1,0 +1,150 @@
+{
+  "author" : "lipanre",
+  "version" : "1.2.9",
+  "userSecure" : "",
+  "currTypeMapperGroupName" : "Default",
+  "currTemplateGroupName" : "modulix-framework",
+  "currColumnConfigGroupName" : "Default",
+  "currGlobalConfigGroupName" : "jimu-framework",
+  "typeMapper" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "matchType" : "REGEX",
+        "columnType" : "varchar(\\(\\d+\\))?",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "char(\\(\\d+\\))?",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "(tiny|medium|long)*text",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "decimal(\\(\\d+,\\d+\\))?",
+        "javaType" : "java.lang.Double"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "integer",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "(small|medium)*int(\\(\\d+\\))?",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "int4",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "int8",
+        "javaType" : "java.lang.Long"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "bigint(\\(\\d+\\))?",
+        "javaType" : "java.lang.Long"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "date",
+        "javaType" : "java.time.LocalDateTime"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "datetime",
+        "javaType" : "java.time.LocalDateTime"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "timestamp",
+        "javaType" : "java.time.LocalDateTime"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "time",
+        "javaType" : "java.time.LocalTime"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "(boolean|tinyint\\(\\d+\\))",
+        "javaType" : "java.lang.Boolean"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "bit(1)",
+        "javaType" : "java.lang.Boolean"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "json",
+        "javaType" : "java.util.Map"
+      } ]
+    }
+  },
+  "template" : {
+    "modulix-framework" : {
+      "name" : "modulix-framework",
+      "elementList" : [ {
+        "name" : "domain.java.vm",
+        "code" : "##引入宏定义\n$!{define.vm}\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/domain\", \".java\")\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"domain\")\n\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\nimport com.modulix.framework.mybatis.plus.api.base.BaseDomain;\nimport com.modulix.framework.mybatis.plus.api.annotation.PageRequest;\nimport lombok.Data;\nimport com.baomidou.mybatisplus.annotation.IdType;\nimport com.baomidou.mybatisplus.annotation.TableName;\nimport com.baomidou.mybatisplus.annotation.TableId;\nimport io.github.linpeilie.annotations.AutoMapper;\nimport io.github.linpeilie.annotations.AutoMappers;\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport lombok.EqualsAndHashCode;\nimport jakarta.validation.constraints.NotEmpty;\nimport jakarta.validation.constraints.NotNull;\nimport org.hibernate.validator.constraints.Length;\nimport com.modulix.framework.validation.common.ValidateGroup;\nimport lombok.experimental.FieldNameConstants;\n\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类\")\n@Data\n@EqualsAndHashCode(callSuper = true)\n@TableName(\"$!{tableInfo.obj.name}\")\n@AutoMappers({\n    @AutoMapper(target = $!{tableInfo.name}VO.class),\n    @AutoMapper(target = $!{tableInfo.name}DTO.class),\n    @AutoMapper(target = $!{tableInfo.name}Query.class),\n})\n@FieldNameConstants\n#set($ignoreColums = $tool.newHashSet(\"createTime\", \"modifyTime\", \"creatorId\", \"modifierId\", \"deleted\"))\npublic class $!{tableInfo.name} extends BaseDomain {\n\n#foreach($column in $tableInfo.pkColumn)\n    #if($column.name != \"id\")\n    #if(${column.comment})\n    /**\n     * ${column.comment}\n     */\n     #end\n    @TableId(type = IdType.ASSIGN_ID)\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n    #end\n#end\n#foreach($column in $tableInfo.otherColumn)\n    #if(!$ignoreColums.contains($column.name))\n    \n    #if(${column.comment})\n    /**\n     * ${column.comment}\n     */\n    #end\n    #if(${column.shortType} == 'String')\n    @Length(max = ${column.obj.dataType.length}, message = \"${column.comment}(${column.name})的长度不能超过{max}个字符\", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})\n      #if(${column.obj.isNotNull()})\n    @NotEmpty(message = \"${column.comment}(${column.name})不能为空\", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})\n      #end\n    #else\n      #if(${column.obj.isNotNull()})\n    @NotNull(message = \"${column.comment}(${column.name})不能为空\", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})\n      #end\n    #end\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n    #end\n#end\n}"
+      }, {
+        "name" : "controller.java.vm",
+        "code" : "##定义初始变量\n#set($tableName = $tool.append($tableInfo.name, \"Controller\"))\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n$!callback.setSavePath($tool.append($tableInfo.savePath, \"/controller\"))\n\n\n## 驼峰转中滑线\n#set($kebabCaseString = $!tool.firstLowerCase($tableInfo.name).replaceAll(\"([a-z])([A-Z])\", \"$1-$2\").toLowerCase())\n\n\n#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}controller;\n\nimport $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;\nimport org.springframework.web.bind.annotation.*;\nimport jakarta.annotation.Resource;\nimport lombok.RequiredArgsConstructor;\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport com.modulix.framework.web.aip.http.Response;\nimport java.util.List;\nimport jakarta.validation.constraints.NotEmpty;\nimport com.modulix.framework.mybatis.plus.api.annotation.PageRequest;\nimport org.springframework.validation.annotation.Validated;\nimport com.modulix.framework.validation.common.ValidateGroup;\n\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})表控制层\n *\n * @author $!author\n * @since $!time.currTime()\n */\n@RestController\n@RequestMapping(\"/$kebabCaseString\")\npublic class $!{tableName} {\n  \n    @Resource\n    private $!{tableInfo.name}Service $!tool.firstLowerCase($tableInfo.name)Service;\n  \n    /**\n    * 创建数据\n    *\n    * @param dto dto\n    * @return true - 成功 <br> false - 失败\n    */\n    @PostMapping\n    public Response<Boolean> create(@RequestBody @Validated(ValidateGroup.Insert.class) $!{tableInfo.name}DTO dto) {\n      return Response.success($!tool.firstLowerCase($tableInfo.name)Service.create(dto));\n    }\n\n    /**\n     * 删除数据\n     *\n     * @param ids id列表\n     * @return true - 成功 <br> false - 失败\n     */\n    @DeleteMapping\n    public Response<Boolean> remove(@RequestBody @NotEmpty(message = \"id列表不能为空\") List<Long> ids) {\n        return Response.success($!tool.firstLowerCase($tableInfo.name)Service.removeBatch(ids));\n    }\n\n    /**\n     * 更新指定数据\n     *\n     * @param id 数据id\n     * @param dto 数据dto\n     * @return true - 成功 <br> false - 失败\n     */\n    @PutMapping(\"/{id}\")\n    public Response<Boolean> update(@PathVariable Long id, @RequestBody @Validated({ValidateGroup.Update.class}) $!{tableInfo.name}DTO dto) {\n        return Response.success($!tool.firstLowerCase($tableInfo.name)Service.update(id, dto));\n    }\n\n    /**\n     * 查询列表\n     *\n     * @return 列表\n     */\n    @PageRequest\n    @GetMapping\n    public Response<List<$!{tableInfo.name}VO>> list($!{tableInfo.name}Query query) {\n        return Response.success($!tool.firstLowerCase($tableInfo.name)Service.list(query));\n    }\n\n    /**\n     * 查询详情\n     *\n     * @param id 数据id\n     * @return 数据详情\n     */\n    @GetMapping(\"/{id}\")\n    public Response<$!{tableInfo.name}VO> detail(@PathVariable Long id) {\n        return Response.success($!tool.firstLowerCase($tableInfo.name)Service.detail(id));\n    }\n  \n}\n"
+      }, {
+        "name" : "mapper.java.vm",
+        "code" : "##定义初始变量\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n#set($tableName = $tool.append($tableInfo.name, \"Mapper\"))\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n$!callback.setSavePath($tool.append($tableInfo.savePath, \"/mapper\"))\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}mapper;\n\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport com.github.yulichang.toolkit.MPJWrappers;\nimport com.github.yulichang.wrapper.MPJLambdaWrapper;\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport java.util.List;\nimport com.modulix.framework.mybatis.plus.api.base.BaseMapper;\n\n\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})表数据库访问层\n *\n * @author $!author\n * @since $!time.currTime()\n */\npublic interface $!{tableName} extends BaseMapper<$!{tableInfo.name}>{\n\n/**\n     * 查询符合条件的列表\n     *\n     * @param query 查询条件\n     * @return 列表\n     */\n    default List<$!{tableInfo.name}VO> list($!{tableInfo.name}Query query) {\n        MPJLambdaWrapper<$!{tableInfo.name}> wrapper = MPJWrappers.lambdaJoin();\n        wrapper.selectAll($!{tableInfo.name}.class);\n        wrapper.orderByDesc($!{tableInfo.name}::getCreateTime);\n        return selectJoinList($!{tableInfo.name}VO.class, wrapper);\n    }\n\n    /**\n     * 查询详情\n     *\n     * @param id id\n     * @return 详情\n     */\n    default $!{tableInfo.name}VO getDetail(Long id) {\n        MPJLambdaWrapper<$!{tableInfo.name}> wrapper = MPJWrappers.lambdaJoin();\n        wrapper.selectAll($!{tableInfo.name}.class);\n        wrapper.eq($!{tableInfo.name}::getId, id);\n        return selectJoinOne($!{tableInfo.name}VO.class, wrapper);\n    }\n}\n"
+      }, {
+        "name" : "service.java.vm",
+        "code" : "##定义初始变量\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n#set($tableName = $tool.append($tableInfo.name, \"Service\"))\n\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n$!callback.setSavePath($tool.append($tableInfo.savePath, \"/service\"))\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}service;\nimport com.modulix.framework.mybatis.plus.api.base.BaseService;\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport java.util.List;\n\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})表服务接口\n *\n * @author $!author\n * @since $!time.currTime()\n */\npublic interface $!{tableName} extends BaseService<$!{tableInfo.name}>{\n\n    /**\n     * 创建\n     *\n     * @param dto dto\n     * @return true - 成功  <br>\n     * false - 失败\n     */\n    Boolean create($!{tableInfo.name}DTO dto);\n\n    /**\n     * 删除\n     *\n     * @param ids id列表\n     * @return true - 成功 <br> false - 失败\n     */\n    Boolean removeBatch(List<Long> ids);\n\n    /**\n     * 更新\n     *\n     * @param id id\n     * @param dto dto\n     * @return true - 成功 <br> false - 失败\n     */\n    Boolean update(Long id, $!{tableInfo.name}DTO dto);\n\n    /**\n     * 查询符合条件的列表\n     *\n     * @param query 查询条件\n     * @return 列表\n     */\n    List<$!{tableInfo.name}VO> list($!{tableInfo.name}Query query);\n\n    /**\n     * 查询详情\n     *\n     * @param id id\n     * @return 详情\n     */\n    $!{tableInfo.name}VO detail(Long id);\n}"
+      }, {
+        "name" : "serviceImpl.java.vm",
+        "code" : "##定义初始变量\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n#set($tableName = $tool.append($tableInfo.name, \"ServiceImpl\"))\n\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n$!callback.setSavePath($tool.append($tableInfo.savePath, \"/service/impl\"))\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}service.impl;\n\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper;\nimport $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;\nimport org.springframework.stereotype.Service;\nimport com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;\nimport lombok.RequiredArgsConstructor;\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport org.springframework.transaction.annotation.Transactional;\nimport java.util.List;\n\n\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})表服务实现类\n *\n * @author $!author\n * @since $!time.currTime()\n */\n@Service\n@RequiredArgsConstructor\npublic class $!{tableName} extends BaseServiceImpl<$!{tableInfo.name}Mapper, $!{tableInfo.name}> implements $!{tableInfo.name}Service {\n\n\n    @Override\n    public Boolean create($!{tableInfo.name}DTO dto) {\n        $!{tableInfo.name} domain = converter.convert(dto, $!{tableInfo.name}.class);\n        return save(domain);\n    }\n\n    @Override\n    @Transactional(rollbackFor = Exception.class)\n    public Boolean removeBatch(List<Long> ids) {\n        return removeBatchByIds(ids);\n    }\n\n    @Override\n    @Transactional(rollbackFor = Exception.class)\n    public Boolean update(Long id, $!{tableInfo.name}DTO dto) {\n        $!{tableInfo.name} domain = converter.convert(dto, $!{tableInfo.name}.class);\n        domain.setId(id);\n        return updateById(domain);\n    }\n\n    @Override\n    public List<$!{tableInfo.name}VO> list($!{tableInfo.name}Query query) {\n        return baseMapper.list(query);\n    }\n\n    @Override\n    public $!{tableInfo.name}VO detail(Long id) {\n        return baseMapper.getDetail(id);\n    }\n}"
+      }, {
+        "name" : "vo.java.vm",
+        "code" : "##引入宏定义\n$!{define.vm}\n\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/vo\", \".java\")\n\n#set($tableName = $tool.append($tableInfo.name, \"VO\"))\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"vo\")\n\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport lombok.Data;\nimport lombok.EqualsAndHashCode;\nimport com.fasterxml.jackson.annotation.JsonIgnoreProperties;\nimport io.github.linpeilie.annotations.AutoMapper;\nimport io.github.linpeilie.annotations.AutoMappers;\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport lombok.experimental.FieldNameConstants;\nimport com.modulix.framework.mybatis.plus.api.base.BaseDomain;\n\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类VO\")\n@Data\n@EqualsAndHashCode(callSuper = true)\n@JsonIgnoreProperties({BaseDomain.Fields.createTime, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted})\n@AutoMappers({\n    @AutoMapper(target = $!{tableInfo.name}.class),\n    @AutoMapper(target = $!{tableInfo.name}DTO.class),\n    @AutoMapper(target = $!{tableInfo.name}Query.class),\n})\n@FieldNameConstants\npublic class $!{tableInfo.name}VO extends $!{tableInfo.name} {\n\n}\n"
+      }, {
+        "name" : "dto.java.vm",
+        "code" : "##引入宏定义\n$!{define.vm}\n\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/dto\", \".java\")\n\n#set($tableName = $tool.append($tableInfo.name, \"DTO\"))\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"dto\")\n\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport lombok.Data;\nimport lombok.EqualsAndHashCode;\nimport com.fasterxml.jackson.annotation.JsonIgnoreProperties;\nimport io.github.linpeilie.annotations.AutoMapper;\nimport io.github.linpeilie.annotations.AutoMappers;\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.query.$!{tableInfo.name}Query;\nimport lombok.experimental.FieldNameConstants;\nimport com.modulix.framework.mybatis.plus.api.base.BaseDomain;\n\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类DTO\")\n@Data\n@EqualsAndHashCode(callSuper = true)\n@JsonIgnoreProperties({BaseDomain.Fields.id, BaseDomain.Fields.creatorId, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, BaseDomain.Fields.createTime, BaseDomain.Fields.modifyTime})\n@AutoMappers({\n    @AutoMapper(target = $!{tableInfo.name}.class),\n    @AutoMapper(target = $!{tableInfo.name}VO.class),\n    @AutoMapper(target = $!{tableInfo.name}Query.class),\n})\n@FieldNameConstants\npublic class $!{tableInfo.name}DTO extends $!{tableInfo.name} {\n\n}\n"
+      }, {
+        "name" : "query.java.vm",
+        "code" : "##引入宏定义\n$!{define.vm}\n\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n\n##使用宏定义设置回调（保存位置与文件后缀）\n#save(\"/query\", \".java\")\n\n#set($tableName = $tool.append($tableInfo.name, \"Query\"))\n\n##设置回调\n$!callback.setFileName($tool.append($tableName, \".java\"))\n\n##使用宏定义设置包后缀\n#setPackageSuffix(\"query\")\n\n##使用全局变量实现默认包导入\n$!{autoImport.vm}\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport com.fasterxml.jackson.annotation.JsonIgnoreProperties;\nimport lombok.Data;\nimport lombok.EqualsAndHashCode;\nimport io.github.linpeilie.annotations.AutoMapper;\nimport io.github.linpeilie.annotations.AutoMappers;\nimport $!{tableInfo.savePackageName}.domain.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO;\nimport $!{tableInfo.savePackageName}.dto.$!{tableInfo.name}DTO;\nimport lombok.experimental.FieldNameConstants;\nimport com.modulix.framework.mybatis.plus.api.base.BaseDomain;\n\n\n##使用宏定义实现类注释信息\n#tableComment(\"实体类Query\")\n@Data\n@EqualsAndHashCode(callSuper = true)\n@JsonIgnoreProperties({BaseDomain.Fields.creatorId, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, BaseDomain.Fields.createTime, BaseDomain.Fields.modifyTime})\n@AutoMappers({\n    @AutoMapper(target = $!{tableInfo.name}.class),\n    @AutoMapper(target = $!{tableInfo.name}DTO.class),\n    @AutoMapper(target = $!{tableInfo.name}VO.class),\n})\n@FieldNameConstants\npublic class $!{tableInfo.name}Query extends $!{tableInfo.name} {\n\n}\n"
+      }, {
+        "name" : "mapper.xml.vm",
+        "code" : "##引入mybatis支持\n$!{mybatisSupport.vm}\n\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n\n##设置保存名称与保存位置\n$!callback.setFileName($tool.append($!{tableInfo.name}, \"Mapper.xml\"))\n$!callback.setSavePath($tool.append($modulePath, \"/src/main/resources/mapper\"))\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n#set($tableAlias = '${table-alias}')\n#set($columnPrefix = '${column-prefix}')\n\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"$!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper\">\n\n</mapper>\n"
+      }, {
+        "name" : "structure.xml.vm",
+        "code" : "##引入mybatis支持\n$!{mybatisSupport.vm}\n\n## 去除t_前缀\n#if($tableInfo.obj.name.startsWith(\"t_\"))\n    $!tableInfo.setName($tool.getClassName($tableInfo.obj.name.substring(2)))\n#end\n\n##设置保存名称与保存位置\n$!callback.setFileName($tool.append($!{tableInfo.name}, \"Mapper.xml\"))\n$!callback.setSavePath($tool.append($modulePath, \"/src/main/resources/mapper/structure\"))\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n#set($tableAlias = '${table-alias}')\n#set($columnPrefix = '${column-prefix}')\n\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"$!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper\">\n\n    <resultMap id=\"domain-map\" type=\"$!{tableInfo.savePackageName}.domain.$!{tableInfo.name}\" autoMapping=\"true\">\n        <id property=\"id\" column=\"id\" jdbcType=\"INTEGER\"/>\n    </resultMap>\n    \n    <resultMap id=\"vo-map\" type=\"$!{tableInfo.savePackageName}.vo.$!{tableInfo.name}VO\" autoMapping=\"true\">\n        <id property=\"id\" column=\"id\" />\n    </resultMap>\n    \n    <sql id=\"domain-sql\">\n#foreach($column in $tableInfo.fullColumn)\n        $tableAlias.$!column.obj.name as `$columnPrefix$!column.obj.name`#if($foreach.hasNext),#end\n#end\n    </sql>\n    \n    <sql id=\"vo-sql\">\n        <include refid=\"$!{tableInfo.savePackageName}.mapper.$!{tableInfo.name}Mapper.domain-sql\" />\n    </sql>\n\n  \n</mapper>\n"
+      }, {
+        "name" : "debug.json",
+        "code" : "#$tool.debug($tableInfo.fullColumn.get(0).obj)\n$tool.debug($tableInfo.fullColumn.get(0).obj.dataType)"
+      } ]
+    }
+  },
+  "columnConfig" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "title" : "disable",
+        "type" : "BOOLEAN",
+        "selectValue" : ""
+      }, {
+        "title" : "support",
+        "type" : "SELECT",
+        "selectValue" : "add,edit,query,del,ui"
+      } ]
+    }
+  },
+  "globalConfig" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "name" : "autoImport.vm",
+        "value" : "##自动导入包（仅导入实体属性需要的包，通常用于实体类）\n#foreach($import in $importList)\nimport $!import;\n#end"
+      }, {
+        "name" : "define.vm",
+        "value" : "##（Velocity宏定义）\n\n##定义设置表名后缀的宏定义，调用方式：#setTableSuffix(\"Test\")\n#macro(setTableSuffix $suffix)\n    #set($tableName = $!tool.append($tableInfo.name, $suffix))\n#end\n\n##定义设置包名后缀的宏定义，调用方式：#setPackageSuffix(\"Test\")\n#macro(setPackageSuffix $suffix)\n#if($suffix!=\"\")package #end#if($tableInfo.savePackageName!=\"\")$!{tableInfo.savePackageName}.#{end}$!suffix;\n#end\n\n##定义直接保存路径与文件名简化的宏定义，调用方式：#save(\"/entity\", \".java\")\n#macro(save $path $fileName)\n    $!callback.setSavePath($tool.append($tableInfo.savePath, $path))\n    $!callback.setFileName($tool.append($tableInfo.name, $fileName))\n#end\n\n##定义表注释的宏定义，调用方式：#tableComment(\"注释信息\")\n#macro(tableComment $desc)\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})$desc\n *\n * @author $!author\n * @since $!time.currTime()\n */\n#end\n\n##定义GET，SET方法的宏定义，调用方式：#getSetMethod($column)\n#macro(getSetMethod $column)\n\n    public $!{tool.getClsNameByFullName($column.type)} get$!{tool.firstUpperCase($column.name)}() {\n        return $!{column.name};\n    }\n\n    public void set$!{tool.firstUpperCase($column.name)}($!{tool.getClsNameByFullName($column.type)} $!{column.name}) {\n        this.$!{column.name} = $!{column.name};\n    }\n#end"
+      }, {
+        "name" : "init.vm",
+        "value" : "##初始化区域\n\n##去掉表的t_前缀\n$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"book_\",\"\")))\n\n##参考阿里巴巴开发手册，POJO 类中布尔类型的变量，都不要加 is 前缀，否则部分框架解析会引起序列化错误\n#foreach($column in $tableInfo.fullColumn)\n#if($column.name.startsWith(\"is\") && $column.type.equals(\"java.lang.Boolean\"))\n    $!column.setName($tool.firstLowerCase($column.name.substring(2)))\n#end\n#end\n\n##实现动态排除列\n#set($temp = $tool.newHashSet(\"testCreateTime\", \"otherColumn\"))\n#foreach($item in $temp)\n    #set($newList = $tool.newArrayList())\n    #foreach($column in $tableInfo.fullColumn)\n        #if($column.name!=$item)\n            ##带有反回值的方法调用时使用$tool.call来消除返回值\n            $tool.call($newList.add($column))\n        #end\n    #end\n    ##重新保存\n    $tableInfo.setFullColumn($newList)\n#end\n\n##对importList进行篡改\n#set($temp = $tool.newHashSet())\n#foreach($column in $tableInfo.fullColumn)\n    #if(!$column.type.startsWith(\"java.lang.\"))\n        ##带有反回值的方法调用时使用$tool.call来消除返回值\n        $tool.call($temp.add($column.type))\n    #end\n#end\n##覆盖\n#set($importList = $temp)"
+      }, {
+        "name" : "mybatisSupport.vm",
+        "value" : "##针对Mybatis 进行支持，主要用于生成xml文件\n#foreach($column in $tableInfo.fullColumn)\n    ##储存列类型\n    $tool.call($column.ext.put(\"sqlType\", $tool.getField($column.obj.dataType, \"typeName\")))\n    #if($tool.newHashSet(\"java.lang.String\").contains($column.type))\n        #set($jdbcType=\"VARCHAR\")\n    #elseif($tool.newHashSet(\"java.lang.Boolean\", \"boolean\").contains($column.type))\n        #set($jdbcType=\"BOOLEAN\")\n    #elseif($tool.newHashSet(\"java.lang.Byte\", \"byte\").contains($column.type))\n        #set($jdbcType=\"BYTE\")\n    #elseif($tool.newHashSet(\"java.lang.Integer\", \"int\", \"java.lang.Short\", \"short\").contains($column.type))\n        #set($jdbcType=\"INTEGER\")\n    #elseif($tool.newHashSet(\"java.lang.Long\", \"long\").contains($column.type))\n        #set($jdbcType=\"INTEGER\")\n    #elseif($tool.newHashSet(\"java.lang.Float\", \"float\", \"java.lang.Double\", \"double\").contains($column.type))\n        #set($jdbcType=\"NUMERIC\")\n    #elseif($tool.newHashSet(\"java.util.Date\", \"java.sql.Timestamp\", \"java.time.Instant\", \"java.time.LocalDateTime\", \"java.time.OffsetDateTime\", \"\tjava.time.ZonedDateTime\").contains($column.type))\n        #set($jdbcType=\"TIMESTAMP\")\n    #elseif($tool.newHashSet(\"java.sql.Date\", \"java.time.LocalDate\").contains($column.type))\n        #set($jdbcType=\"TIMESTAMP\")\n    #else\n        ##其他类型\n        #set($jdbcType=\"VARCHAR\")\n    #end\n    $tool.call($column.ext.put(\"jdbcType\", $jdbcType))\n#end\n\n##定义宏，查询所有列\n#macro(allSqlColumn)#foreach($column in $tableInfo.fullColumn)$column.obj.name#if($foreach.hasNext), #end#end#end\n"
+      } ]
+    }
+  }
+}
