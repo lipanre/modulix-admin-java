@@ -1,0 +1,24 @@
+[versions]
+# 插件版本
+spring-boot-version = "3.5.3"
+lombok-version = "8.14"
+spring-boot-dependencies-version = "1.1.7"
+
+# 依赖版本
+modulix-framework-version = "0.0.10"
+mysql-connector-version = "8.4.0"
+
+[libraries]
+mysql-connector = {module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector-version"}
+modulix-framework-starter = { module = "io.github.lipanre:modulix-framework-starter", version.ref = "modulix-framework-version" }
+
+# spring
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter"}
+
+[bundles]
+
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot-version" }
+spring-boot-dependencies = { id = "io.spring.dependency-management", version.ref = "spring-boot-dependencies-version" }
+lombok = { id = "io.freefair.lombok", version.ref = "lombok-version" }

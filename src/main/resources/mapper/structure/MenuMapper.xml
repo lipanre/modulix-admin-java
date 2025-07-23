@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modulix.admin.mapper.MenuMapper">
+
+    <resultMap id="domain-map" type="com.modulix.admin.domain.Menu" autoMapping="true">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="vo-map" type="com.modulix.admin.vo.MenuVO" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+
+    <sql id="domain-sql">
+        ${table-alias}.id as `${column-prefix}id`,
+        ${table-alias}.parent_id as `${column-prefix}parent_id`,
+        ${table-alias}.name as `${column-prefix}name`,
+        ${table-alias}.path as `${column-prefix}path`,
+        ${table-alias}.component as `${column-prefix}component`,
+        ${table-alias}.title as `${column-prefix}title`,
+        ${table-alias}.i18n_key as `${column-prefix}i18n_key`,
+        ${table-alias}.roles as `${column-prefix}roles`,
+        ${table-alias}.keep_alive as `${column-prefix}keep_alive`,
+        ${table-alias}.constant as `${column-prefix}constant`,
+        ${table-alias}.icon as `${column-prefix}icon`,
+        ${table-alias}.icon_font_size as `${column-prefix}icon_font_size`,
+        ${table-alias}.order as `${column-prefix}order`,
+        ${table-alias}.href as `${column-prefix}href`,
+        ${table-alias}.hide_in_menu as `${column-prefix}hide_in_menu`,
+        ${table-alias}.active_menu as `${column-prefix}active_menu`,
+        ${table-alias}.multi_tab as `${column-prefix}multi_tab`,
+        ${table-alias}.fixed_index_in_tab as `${column-prefix}fixed_index_in_tab`,
+        ${table-alias}.query as `${column-prefix}query`,
+        ${table-alias}.create_time as `${column-prefix}create_time`,
+        ${table-alias}.modify_time as `${column-prefix}modify_time`,
+        ${table-alias}.creator_id as `${column-prefix}creator_id`,
+        ${table-alias}.modifier_id as `${column-prefix}modifier_id`,
+        ${table-alias}.deleted as `${column-prefix}deleted`
+    </sql>
+
+    <sql id="vo-sql">
+        <include refid="com.modulix.admin.mapper.MenuMapper.domain-sql"/>
+    </sql>
+
+
+</mapper>
+

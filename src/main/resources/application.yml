@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: modulix-admin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/modulix_admin?useSSL=false&serverTimezone=UTC
+    username: root
+    password: lipanre
+modulix:
+  security:
+    token:
+      header: Authorization
+      access-secret: 6O3mX1jCSyVKYbINczXJh38hrDIUz56r
+      refresh-secret-private: classpath:private.key
+      refresh-secret-public: classpath:public.key
+      monitor-prefix: m9L{!{hd@9YHpK=
