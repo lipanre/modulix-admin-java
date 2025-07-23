@@ -20,7 +20,7 @@ import com.modulix.framework.validation.common.ValidateGroup;
  * 角色表(Role)表控制层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-24 01:32:39
  */
 @RestController
 @RequestMapping("/role")
@@ -52,7 +52,7 @@ public class RoleController {
     }
 
     /**
-     * 更新指定字典
+     * 更新指定数据
      *
      * @param id  数据id
      * @param dto 数据dto
@@ -64,9 +64,9 @@ public class RoleController {
     }
 
     /**
-     * 查询字典列表
+     * 查询列表
      *
-     * @return 字典列表
+     * @return 列表
      */
     @PageRequest
     @GetMapping
@@ -75,7 +75,7 @@ public class RoleController {
     }
 
     /**
-     * 查询字典详情
+     * 查询详情
      *
      * @param id 数据id
      * @return 数据详情

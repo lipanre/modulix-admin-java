@@ -1,24 +1,26 @@
 package com.modulix.admin.controller;
 
+import com.modulix.admin.service.DictService;
+import org.springframework.web.bind.annotation.*;
+import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
+import com.modulix.admin.vo.DictVO;
 import com.modulix.admin.dto.DictDTO;
 import com.modulix.admin.query.DictQuery;
-import com.modulix.admin.service.DictService;
-import com.modulix.admin.vo.DictVO;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import com.modulix.framework.validation.common.ValidateGroup;
 import com.modulix.framework.web.aip.http.Response;
-import jakarta.annotation.Resource;
-import jakarta.validation.constraints.NotEmpty;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import jakarta.validation.constraints.NotEmpty;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import org.springframework.validation.annotation.Validated;
+import com.modulix.framework.validation.common.ValidateGroup;
 
 /**
  * 字典(Dict)表控制层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-24 01:32:39
  */
 @RestController
 @RequestMapping("/dict")
@@ -50,7 +52,7 @@ public class DictController {
     }
 
     /**
-     * 更新指定字典
+     * 更新指定数据
      *
      * @param id  数据id
      * @param dto 数据dto
@@ -62,9 +64,9 @@ public class DictController {
     }
 
     /**
-     * 查询字典列表
+     * 查询列表
      *
-     * @return 字典列表
+     * @return 列表
      */
     @PageRequest
     @GetMapping
@@ -73,7 +75,7 @@ public class DictController {
     }
 
     /**
-     * 查询字典详情
+     * 查询详情
      *
      * @param id 数据id
      * @return 数据详情
