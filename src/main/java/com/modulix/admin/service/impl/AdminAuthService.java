@@ -3,6 +3,8 @@ package com.modulix.admin.service.impl;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.service.UserService;
 import com.modulix.framework.security.api.auth.AuthenticationService;
+import com.modulix.framework.security.api.auth.AuthenticationServiceType;
+import com.modulix.framework.security.api.auth.UserInfo;
 import com.modulix.framework.security.api.auth.admin.AdminAccountAuthentication;
 import io.github.linpeilie.Converter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import java.util.function.Supplier;
 /**
  * @author lipanre
  */
-@Service
+@Service(AuthenticationServiceType.ADMIN_ACCOUNT)
 @RequiredArgsConstructor
 public class AdminAuthService implements AuthenticationService<AdminAccountAuthentication> {
 
@@ -35,5 +37,14 @@ public class AdminAuthService implements AuthenticationService<AdminAccountAuthe
         AdminAccountAuthentication authentication = converter.convert(user, AdminAccountAuthentication.class);
         authentication.setDataScopes(Collections.emptyList());
         return authentication;
+    }
+
+    @Override
+    public UserInfo getUserInfo(Long userId) {
+        User user = userService.getById(userId);
+        UserInfo userInfo = converter.convert(user, UserInfo.class);
+        userInfo.setRoles(Collections.emptyList());
+        userInfo.setButtons(Collections.emptyList());
+        return userInfo;
     }
 }
