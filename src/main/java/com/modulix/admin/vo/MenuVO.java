@@ -1,22 +1,24 @@
 package com.modulix.admin.vo;
 
+import java.time.LocalDateTime;
+
+import com.modulix.admin.domain.Menu;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.github.linpeilie.annotations.AutoMapper;
+import io.github.linpeilie.annotations.AutoMappers;
 import com.modulix.admin.domain.Menu;
 import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.query.MenuQuery;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import io.github.linpeilie.annotations.AutoMapper;
-import io.github.linpeilie.annotations.AutoMappers;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
 
 
 /**
  * 菜单(Menu)实体类VO
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +28,6 @@ import lombok.experimental.FieldNameConstants;
         @AutoMapper(target = MenuDTO.class),
         @AutoMapper(target = MenuQuery.class),
 })
-@FieldNameConstants
 public class MenuVO extends Menu {
 
 }

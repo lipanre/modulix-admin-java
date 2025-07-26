@@ -2,20 +2,20 @@ package com.modulix.admin.vo;
 
 import java.time.LocalDateTime;
 
-import com.modulix.admin.domain.User;
+import com.modulix.admin.domain.Login;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.domain.User;
-import com.modulix.admin.dto.UserDTO;
-import com.modulix.admin.query.UserQuery;
+import com.modulix.admin.domain.Login;
+import com.modulix.admin.dto.LoginDTO;
+import com.modulix.admin.query.LoginQuery;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 
 
 /**
- * 用户(User)实体类VO
+ * 登录记录(Login)实体类VO
  *
  * @author lipanre
  * @since 2025-07-26 13:56:16
@@ -24,11 +24,11 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({BaseDomain.Fields.createTime, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted})
 @AutoMappers({
-        @AutoMapper(target = User.class),
-        @AutoMapper(target = UserDTO.class),
-        @AutoMapper(target = UserQuery.class),
+        @AutoMapper(target = Login.class),
+        @AutoMapper(target = LoginDTO.class),
+        @AutoMapper(target = LoginQuery.class),
 })
-public class UserVO extends User {
+public class LoginVO extends Login {
 
 }
 

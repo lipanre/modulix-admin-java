@@ -18,7 +18,7 @@ import java.util.List;
  * 用户(User)表服务实现类
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Service
 @RequiredArgsConstructor
@@ -53,5 +53,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public UserVO detail(Long id) {
         return baseMapper.getDetail(id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return baseMapper.getByUsername(username);
     }
 }

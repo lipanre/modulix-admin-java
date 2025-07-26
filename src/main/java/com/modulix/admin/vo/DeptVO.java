@@ -11,7 +11,6 @@ import io.github.linpeilie.annotations.AutoMappers;
 import com.modulix.admin.domain.Dept;
 import com.modulix.admin.dto.DeptDTO;
 import com.modulix.admin.query.DeptQuery;
-import lombok.experimental.FieldNameConstants;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 
 
@@ -19,7 +18,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
  * (Dept)实体类VO
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-26 13:56:15
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,7 +28,6 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
         @AutoMapper(target = DeptDTO.class),
         @AutoMapper(target = DeptQuery.class),
 })
-@FieldNameConstants
 public class DeptVO extends Dept {
 
 }

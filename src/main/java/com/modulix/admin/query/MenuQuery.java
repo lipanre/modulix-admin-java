@@ -9,14 +9,13 @@ import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
 
 
 /**
  * 菜单(Menu)实体类Query
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +25,6 @@ import lombok.experimental.FieldNameConstants;
         @AutoMapper(target = MenuDTO.class),
         @AutoMapper(target = MenuVO.class),
 })
-@FieldNameConstants
 public class MenuQuery extends Menu {
 
 }

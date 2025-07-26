@@ -1,26 +1,31 @@
 package com.modulix.admin.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.modulix.admin.dto.MenuDTO;
-import com.modulix.admin.query.MenuQuery;
-import com.modulix.admin.vo.MenuVO;
+import java.time.LocalDateTime;
+
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.validation.common.ValidateGroup;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import lombok.Data;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import lombok.Data;
+import com.modulix.admin.vo.MenuVO;
+import com.modulix.admin.dto.MenuDTO;
+import com.modulix.admin.query.MenuQuery;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.Map;
+import com.modulix.framework.validation.common.ValidateGroup;
+import lombok.experimental.FieldNameConstants;
 
 
 /**
  * 菜单(Menu)实体类
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -69,7 +74,7 @@ public class Menu extends BaseDomain {
     /**
      * 可访问角色
      */
-    private Map roles;
+    private Object roles;
 
     /**
      * 是否缓存
@@ -127,5 +132,5 @@ public class Menu extends BaseDomain {
     /**
      * 查询参数
      */
-    private Map query;
+    private Object query;
 }

@@ -25,7 +25,7 @@ import lombok.experimental.FieldNameConstants;
  * 字典(Dict)实体类
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-26 13:56:15
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

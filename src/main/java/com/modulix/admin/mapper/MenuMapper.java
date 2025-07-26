@@ -1,20 +1,22 @@
 package com.modulix.admin.mapper;
 
+import com.modulix.admin.domain.Menu;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.domain.Menu;
-import com.modulix.admin.query.MenuQuery;
 import com.modulix.admin.vo.MenuVO;
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import com.modulix.admin.dto.MenuDTO;
+import com.modulix.admin.query.MenuQuery;
 
 import java.util.List;
+
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
  * 菜单(Menu)表数据库访问层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 

@@ -1,26 +1,31 @@
 package com.modulix.admin.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.modulix.admin.dto.RoleDTO;
-import com.modulix.admin.query.RoleQuery;
-import com.modulix.admin.vo.RoleVO;
+import java.time.LocalDateTime;
+
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.validation.common.ValidateGroup;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import lombok.Data;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
+import com.modulix.admin.vo.RoleVO;
+import com.modulix.admin.dto.RoleDTO;
+import com.modulix.admin.query.RoleQuery;
+import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
 import org.hibernate.validator.constraints.Length;
+import com.modulix.framework.validation.common.ValidateGroup;
+import lombok.experimental.FieldNameConstants;
 
 
 /**
  * 角色表(Role)实体类
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

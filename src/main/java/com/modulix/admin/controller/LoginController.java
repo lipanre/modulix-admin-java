@@ -1,12 +1,12 @@
 package com.modulix.admin.controller;
 
-import com.modulix.admin.service.MenuService;
+import com.modulix.admin.service.LoginService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.MenuVO;
-import com.modulix.admin.dto.MenuDTO;
-import com.modulix.admin.query.MenuQuery;
+import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.dto.LoginDTO;
+import com.modulix.admin.query.LoginQuery;
 import com.modulix.framework.web.aip.http.Response;
 
 import java.util.List;
@@ -17,17 +17,17 @@ import org.springframework.validation.annotation.Validated;
 import com.modulix.framework.validation.common.ValidateGroup;
 
 /**
- * 菜单(Menu)表控制层
+ * 登录记录(Login)表控制层
  *
  * @author lipanre
- * @since 2025-07-26 13:56:16
+ * @since 2025-07-26 13:56:15
  */
 @RestController
-@RequestMapping("/menu")
-public class MenuController {
+@RequestMapping("/login")
+public class LoginController {
 
     @Resource
-    private MenuService menuService;
+    private LoginService loginService;
 
     /**
      * 创建数据
@@ -36,8 +36,8 @@ public class MenuController {
      * @return true - 成功 <br> false - 失败
      */
     @PostMapping
-    public Response<Boolean> create(@RequestBody @Validated(ValidateGroup.Insert.class) MenuDTO dto) {
-        return Response.success(menuService.create(dto));
+    public Response<Boolean> create(@RequestBody @Validated(ValidateGroup.Insert.class) LoginDTO dto) {
+        return Response.success(loginService.create(dto));
     }
 
     /**
@@ -48,7 +48,7 @@ public class MenuController {
      */
     @DeleteMapping
     public Response<Boolean> remove(@RequestBody @NotEmpty(message = "id列表不能为空") List<Long> ids) {
-        return Response.success(menuService.removeBatch(ids));
+        return Response.success(loginService.removeBatch(ids));
     }
 
     /**
@@ -59,8 +59,8 @@ public class MenuController {
      * @return true - 成功 <br> false - 失败
      */
     @PutMapping("/{id}")
-    public Response<Boolean> update(@PathVariable Long id, @RequestBody @Validated({ValidateGroup.Update.class}) MenuDTO dto) {
-        return Response.success(menuService.update(id, dto));
+    public Response<Boolean> update(@PathVariable Long id, @RequestBody @Validated({ValidateGroup.Update.class}) LoginDTO dto) {
+        return Response.success(loginService.update(id, dto));
     }
 
     /**
@@ -70,8 +70,8 @@ public class MenuController {
      */
     @PageRequest
     @GetMapping
-    public Response<List<MenuVO>> list(MenuQuery query) {
-        return Response.success(menuService.list(query));
+    public Response<List<LoginVO>> list(LoginQuery query) {
+        return Response.success(loginService.list(query));
     }
 
     /**
@@ -81,8 +81,8 @@ public class MenuController {
      * @return 数据详情
      */
     @GetMapping("/{id}")
-    public Response<MenuVO> detail(@PathVariable Long id) {
-        return Response.success(menuService.detail(id));
+    public Response<LoginVO> detail(@PathVariable Long id) {
+        return Response.success(loginService.detail(id));
     }
 
 }

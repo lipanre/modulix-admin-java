@@ -11,7 +11,6 @@ import io.github.linpeilie.annotations.AutoMappers;
 import com.modulix.admin.domain.Role;
 import com.modulix.admin.dto.RoleDTO;
 import com.modulix.admin.query.RoleQuery;
-import lombok.experimental.FieldNameConstants;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 
 
@@ -19,7 +18,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
  * 角色表(Role)实体类VO
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,7 +28,6 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
         @AutoMapper(target = RoleDTO.class),
         @AutoMapper(target = RoleQuery.class),
 })
-@FieldNameConstants
 public class RoleVO extends Role {
 
 }

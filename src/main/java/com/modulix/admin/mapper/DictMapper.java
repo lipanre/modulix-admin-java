@@ -1,20 +1,22 @@
 package com.modulix.admin.mapper;
 
+import com.modulix.admin.domain.Dict;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.domain.Dict;
-import com.modulix.admin.query.DictQuery;
 import com.modulix.admin.vo.DictVO;
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import com.modulix.admin.dto.DictDTO;
+import com.modulix.admin.query.DictQuery;
 
 import java.util.List;
+
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
  * 字典(Dict)表数据库访问层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-26 13:56:15
  */
 public interface DictMapper extends BaseMapper<Dict> {
 

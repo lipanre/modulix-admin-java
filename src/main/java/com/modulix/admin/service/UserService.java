@@ -12,7 +12,7 @@ import java.util.List;
  * 用户(User)表服务接口
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 public interface UserService extends BaseService<User> {
 
@@ -57,4 +57,12 @@ public interface UserService extends BaseService<User> {
      * @return 详情
      */
     UserVO detail(Long id);
+
+    /**
+     * 通过用户名获取用户信息
+     *
+     * @param username 用户名
+     * @return 用户信息
+     */
+    User getUserByUsername(String username);
 }

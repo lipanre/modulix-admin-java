@@ -5,12 +5,16 @@ lombok-version = "8.14"
 spring-boot-dependencies-version = "1.1.7"
 
 # 依赖版本
-modulix-framework-version = "0.0.10"
+modulix-framework-version = "0.0.11"
 mysql-connector-version = "8.4.0"
+mapstruct-plus-version = "1.4.8"
+
 
 [libraries]
 mysql-connector = {module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector-version"}
 modulix-framework-starter = { module = "io.github.lipanre:modulix-framework-starter", version.ref = "modulix-framework-version" }
+mapstruct-plus-processor = { module = "io.github.linpeilie:mapstruct-plus-processor", version.ref = "mapstruct-plus-version" }
+
 
 # spring
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter"}

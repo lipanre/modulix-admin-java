@@ -12,7 +12,7 @@ import java.util.List;
  * 菜单(Menu)表服务接口
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 public interface MenuService extends BaseService<Menu> {
 

@@ -1,20 +1,22 @@
 package com.modulix.admin.mapper;
 
+import com.modulix.admin.domain.Dept;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.domain.Dept;
-import com.modulix.admin.query.DeptQuery;
 import com.modulix.admin.vo.DeptVO;
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import com.modulix.admin.dto.DeptDTO;
+import com.modulix.admin.query.DeptQuery;
 
 import java.util.List;
+
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
  * (Dept)表数据库访问层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-26 13:56:15
  */
 public interface DeptMapper extends BaseMapper<Dept> {
 

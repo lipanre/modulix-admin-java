@@ -9,10 +9,12 @@ group = "io.github.lipanre"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     implementation(libs.modulix.framework.starter)
     implementation(libs.mysql.connector)
+    annotationProcessor(libs.mapstruct.plus.processor)
 }

@@ -1,20 +1,20 @@
 package com.modulix.admin.service;
 
 import com.modulix.framework.mybatis.plus.api.base.BaseService;
-import com.modulix.admin.domain.Role;
-import com.modulix.admin.vo.RoleVO;
-import com.modulix.admin.dto.RoleDTO;
-import com.modulix.admin.query.RoleQuery;
+import com.modulix.admin.domain.Login;
+import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.dto.LoginDTO;
+import com.modulix.admin.query.LoginQuery;
 
 import java.util.List;
 
 /**
- * 角色表(Role)表服务接口
+ * 登录记录(Login)表服务接口
  *
  * @author lipanre
- * @since 2025-07-26 13:56:16
+ * @since 2025-07-26 13:56:15
  */
-public interface RoleService extends BaseService<Role> {
+public interface LoginService extends BaseService<Login> {
 
     /**
      * 创建
@@ -23,7 +23,7 @@ public interface RoleService extends BaseService<Role> {
      * @return true - 成功  <br>
      * false - 失败
      */
-    Boolean create(RoleDTO dto);
+    Boolean create(LoginDTO dto);
 
     /**
      * 删除
@@ -40,7 +40,7 @@ public interface RoleService extends BaseService<Role> {
      * @param dto dto
      * @return true - 成功 <br> false - 失败
      */
-    Boolean update(Long id, RoleDTO dto);
+    Boolean update(Long id, LoginDTO dto);
 
     /**
      * 查询符合条件的列表
@@ -48,7 +48,7 @@ public interface RoleService extends BaseService<Role> {
      * @param query 查询条件
      * @return 列表
      */
-    List<RoleVO> list(RoleQuery query);
+    List<LoginVO> list(LoginQuery query);
 
     /**
      * 查询详情
@@ -56,5 +56,5 @@ public interface RoleService extends BaseService<Role> {
      * @param id id
      * @return 详情
      */
-    RoleVO detail(Long id);
+    LoginVO detail(Long id);
 }

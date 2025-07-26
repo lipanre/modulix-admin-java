@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modulix.admin.mapper.LoginMapper">
+
+    <resultMap id="domain-map" type="com.modulix.admin.domain.Login" autoMapping="true">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="vo-map" type="com.modulix.admin.vo.LoginVO" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+
+    <sql id="domain-sql">
+        ${table-alias}.id as `${column-prefix}id`,
+        ${table-alias}.user_info as `${column-prefix}user_info`,
+        ${table-alias}.refresh_token as `${column-prefix}refresh_token`,
+        ${table-alias}.expire_time as `${column-prefix}expire_time`,
+        ${table-alias}.client_id as `${column-prefix}client_id`,
+        ${table-alias}.create_time as `${column-prefix}create_time`,
+        ${table-alias}.modify_time as `${column-prefix}modify_time`,
+        ${table-alias}.creator_id as `${column-prefix}creator_id`,
+        ${table-alias}.modifier_id as `${column-prefix}modifier_id`,
+        ${table-alias}.deleted as `${column-prefix}deleted`
+    </sql>
+
+    <sql id="vo-sql">
+        <include refid="com.modulix.admin.mapper.LoginMapper.domain-sql"/>
+    </sql>
+
+
+</mapper>
+

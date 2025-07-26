@@ -1,22 +1,21 @@
 package com.modulix.admin.mapper;
 
-import com.modulix.admin.domain.User;
+import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.vo.UserVO;
-import com.modulix.admin.dto.UserDTO;
+import com.modulix.admin.domain.User;
 import com.modulix.admin.query.UserQuery;
+import com.modulix.admin.vo.UserVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 import java.util.List;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
  * 用户(User)表数据库访问层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 public interface UserMapper extends BaseMapper<User> {
 
@@ -44,6 +43,18 @@ public interface UserMapper extends BaseMapper<User> {
         wrapper.selectAll(User.class);
         wrapper.eq(User::getId, id);
         return selectJoinOne(UserVO.class, wrapper);
+    }
+
+    /**
+     * 通过用户名获取用户信息
+     *
+     * @param username 用户名
+     * @return 用户信息
+     */
+    default User getByUsername(String username) {
+        MPJLambdaWrapper<User> wrapper = JoinWrappers.lambda();
+        wrapper.eq(User::getUsername, username);
+        return selectJoinOne(wrapper);
     }
 }
 

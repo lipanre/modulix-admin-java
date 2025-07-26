@@ -11,7 +11,6 @@ import io.github.linpeilie.annotations.AutoMappers;
 import com.modulix.admin.domain.Dict;
 import com.modulix.admin.vo.DictVO;
 import com.modulix.admin.query.DictQuery;
-import lombok.experimental.FieldNameConstants;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 
 
@@ -19,7 +18,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
  * 字典(Dict)实体类DTO
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:15
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,7 +28,6 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
         @AutoMapper(target = DictVO.class),
         @AutoMapper(target = DictQuery.class),
 })
-@FieldNameConstants
 public class DictDTO extends Dict {
 
 }

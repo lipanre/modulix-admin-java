@@ -12,7 +12,7 @@ import java.util.List;
  * 字典(Dict)表服务接口
  *
  * @author lipanre
- * @since 2025-07-24 01:29:08
+ * @since 2025-07-26 13:56:15
  */
 public interface DictService extends BaseService<Dict> {
 

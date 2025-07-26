@@ -5,6 +5,7 @@ import com.modulix.admin.dto.UserDTO;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import com.modulix.framework.security.api.auth.admin.AdminAccountAuthentication;
 import com.modulix.framework.validation.common.ValidateGroup;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.Length;
  * 用户(User)实体类
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,6 +30,7 @@ import org.hibernate.validator.constraints.Length;
         @AutoMapper(target = UserVO.class),
         @AutoMapper(target = UserDTO.class),
         @AutoMapper(target = UserQuery.class),
+        @AutoMapper(target = AdminAccountAuthentication.class)
 })
 @FieldNameConstants
 public class User extends BaseDomain {

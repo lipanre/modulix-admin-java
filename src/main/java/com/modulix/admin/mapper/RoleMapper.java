@@ -1,20 +1,22 @@
 package com.modulix.admin.mapper;
 
+import com.modulix.admin.domain.Role;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.domain.Role;
-import com.modulix.admin.query.RoleQuery;
 import com.modulix.admin.vo.RoleVO;
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import com.modulix.admin.dto.RoleDTO;
+import com.modulix.admin.query.RoleQuery;
 
 import java.util.List;
+
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
  * 角色表(Role)表数据库访问层
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 public interface RoleMapper extends BaseMapper<Role> {
 

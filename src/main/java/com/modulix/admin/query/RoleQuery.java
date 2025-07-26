@@ -1,22 +1,24 @@
 package com.modulix.admin.query;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.time.LocalDateTime;
+
 import com.modulix.admin.domain.Role;
-import com.modulix.admin.dto.RoleDTO;
-import com.modulix.admin.vo.RoleVO;
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import io.github.linpeilie.annotations.AutoMapper;
-import io.github.linpeilie.annotations.AutoMappers;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.FieldNameConstants;
+import io.github.linpeilie.annotations.AutoMapper;
+import io.github.linpeilie.annotations.AutoMappers;
+import com.modulix.admin.domain.Role;
+import com.modulix.admin.vo.RoleVO;
+import com.modulix.admin.dto.RoleDTO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 
 
 /**
  * 角色表(Role)实体类Query
  *
  * @author lipanre
- * @since 2025-07-24 01:29:09
+ * @since 2025-07-26 13:56:16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +28,6 @@ import lombok.experimental.FieldNameConstants;
         @AutoMapper(target = RoleDTO.class),
         @AutoMapper(target = RoleVO.class),
 })
-@FieldNameConstants
 public class RoleQuery extends Role {
 
 }
