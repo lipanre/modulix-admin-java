@@ -8,6 +8,7 @@ import com.modulix.admin.query.LoginQuery;
 import com.modulix.admin.vo.LoginVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -54,6 +55,7 @@ public interface LoginMapper extends BaseMapper<Login> {
     default String getUserId(String refreshToken) {
         MPJLambdaWrapper<Login> wrapper = JoinWrappers.lambda();
         wrapper.eq(Login::getRefreshToken, refreshToken);
+        wrapper.ge(Login::getExpireTime, LocalDateTime.now());
         return selectColumn(wrapper, Login::getUserInfo);
     }
 

@@ -1,17 +1,14 @@
 package com.modulix.admin.vo;
 
-import java.time.LocalDateTime;
-
-import com.modulix.admin.domain.User;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.github.linpeilie.annotations.AutoMapper;
-import io.github.linpeilie.annotations.AutoMappers;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.dto.UserDTO;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import io.github.linpeilie.annotations.AutoMapper;
+import io.github.linpeilie.annotations.AutoMappers;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -22,7 +19,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties({BaseDomain.Fields.createTime, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted})
+@JsonIgnoreProperties({BaseDomain.Fields.createTime, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, User.Fields.password})
 @AutoMappers({
         @AutoMapper(target = User.class),
         @AutoMapper(target = UserDTO.class),

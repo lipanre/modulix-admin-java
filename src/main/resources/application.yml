@@ -15,3 +15,7 @@ modulix:
       header: Authorization
       access-secret: 6O3mX1jCSyVKYbINczXJh38hrDIUz56r
       monitor-prefix: m9L{!{hd@9YHpK=
+      access-expiration: 10m
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -39,8 +39,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 详情
      */
     default UserVO getDetail(Long id) {
-        MPJLambdaWrapper<User> wrapper = MPJWrappers.lambdaJoin();
-        wrapper.selectAll(User.class);
+        MPJLambdaWrapper<User> wrapper = MPJWrappers.lambdaJoin(User.class);
         wrapper.eq(User::getId, id);
         return selectJoinOne(UserVO.class, wrapper);
     }
@@ -52,7 +51,8 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 用户信息
      */
     default User getByUsername(String username) {
-        MPJLambdaWrapper<User> wrapper = JoinWrappers.lambda();
+        MPJLambdaWrapper<User> wrapper = JoinWrappers.lambda(User.class);
+        wrapper.selectAll();
         wrapper.eq(User::getUsername, username);
         return selectJoinOne(wrapper);
     }

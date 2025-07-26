@@ -8,6 +8,7 @@ import io.github.linpeilie.Converter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.function.Supplier;
 
 /**
@@ -31,6 +32,8 @@ public class AdminAuthService implements AuthenticationService<AdminAccountAuthe
     @Override
     public AdminAccountAuthentication loadAuthenticationById(Long userId) {
         User user = userService.getById(userId);
-        return converter.convert(user, AdminAccountAuthentication.class);
+        AdminAccountAuthentication authentication = converter.convert(user, AdminAccountAuthentication.class);
+        authentication.setDataScopes(Collections.emptyList());
+        return authentication;
     }
 }

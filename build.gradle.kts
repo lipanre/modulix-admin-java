@@ -15,6 +15,11 @@ repositories {
 
 dependencies {
     implementation(libs.modulix.framework.starter)
+    implementation(libs.spring.boot.starter.test)
     implementation(libs.mysql.connector)
     annotationProcessor(libs.mapstruct.plus.processor)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
