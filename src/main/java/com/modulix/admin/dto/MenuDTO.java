@@ -1,24 +1,21 @@
 package com.modulix.admin.dto;
 
-import java.time.LocalDateTime;
-
-import com.modulix.admin.domain.Menu;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.modulix.admin.domain.Menu;
+import com.modulix.admin.query.MenuQuery;
+import com.modulix.admin.vo.MenuVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.domain.Menu;
-import com.modulix.admin.vo.MenuVO;
-import com.modulix.admin.query.MenuQuery;
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
  * 菜单(Menu)实体类DTO
  *
  * @author lipanre
- * @since 2025-07-26 13:56:16
+ * @since 2025-07-28 22:51:57
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

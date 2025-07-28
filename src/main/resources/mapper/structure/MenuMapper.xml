@@ -4,16 +4,21 @@
 
     <resultMap id="domain-map" type="com.modulix.admin.domain.Menu" autoMapping="true">
         <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="query" column="query" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
     </resultMap>
 
     <resultMap id="vo-map" type="com.modulix.admin.vo.MenuVO" autoMapping="true">
         <id property="id" column="id"/>
+        <result property="query" column="query" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
     </resultMap>
 
     <sql id="domain-sql">
         ${table-alias}.id as `${column-prefix}id`,
+        ${table-alias}.type as `${column-prefix}type`,
         ${table-alias}.parent_id as `${column-prefix}parent_id`,
         ${table-alias}.name as `${column-prefix}name`,
+        ${table-alias}.status as `${column-prefix}status`,
+        ${table-alias}.route_name as `${column-prefix}route_name`,
         ${table-alias}.path as `${column-prefix}path`,
         ${table-alias}.component as `${column-prefix}component`,
         ${table-alias}.title as `${column-prefix}title`,
@@ -21,9 +26,10 @@
         ${table-alias}.roles as `${column-prefix}roles`,
         ${table-alias}.keep_alive as `${column-prefix}keep_alive`,
         ${table-alias}.constant as `${column-prefix}constant`,
+        ${table-alias}.icon_type as `${column-prefix}icon_type`,
         ${table-alias}.icon as `${column-prefix}icon`,
         ${table-alias}.icon_font_size as `${column-prefix}icon_font_size`,
-        ${table-alias}.order as `${column-prefix}order`,
+        ${table-alias}.sort as `${column-prefix}sort`,
         ${table-alias}.href as `${column-prefix}href`,
         ${table-alias}.hide_in_menu as `${column-prefix}hide_in_menu`,
         ${table-alias}.active_menu as `${column-prefix}active_menu`,

@@ -1,35 +1,33 @@
 package com.modulix.admin.domain;
 
-import java.time.LocalDateTime;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.modulix.admin.dto.MenuDTO;
+import com.modulix.admin.enums.EnableStatus;
+import com.modulix.admin.enums.IconType;
+import com.modulix.admin.enums.MenuType;
+import com.modulix.admin.query.MenuQuery;
+import com.modulix.admin.vo.MenuVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import com.modulix.framework.validation.common.ValidateGroup;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.vo.MenuVO;
-import com.modulix.admin.dto.MenuDTO;
-import com.modulix.admin.query.MenuQuery;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import com.modulix.framework.validation.common.ValidateGroup;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.validator.constraints.Length;
 
 
 /**
  * 菜单(Menu)实体类
  *
  * @author lipanre
- * @since 2025-07-26 13:56:16
+ * @since 2025-07-28 23:17:21
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_menu")
+@TableName(value = "sys_menu", autoResultMap = true)
 @AutoMappers({
         @AutoMapper(target = MenuVO.class),
         @AutoMapper(target = MenuDTO.class),
@@ -38,6 +36,12 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class Menu extends BaseDomain {
 
+
+    /**
+     * 菜单类型
+     */
+    @Length(max = 10, message = "菜单类型(type)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
+    private MenuType type;
 
     /**
      * 父级id
@@ -49,6 +53,17 @@ public class Menu extends BaseDomain {
      */
     @Length(max = 50, message = "菜单名称(name)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String name;
+
+    /**
+     * 启用状态
+     */
+    private EnableStatus status;
+
+    /**
+     * 路由名称
+     */
+    @Length(max = 50, message = "路由名称(name)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
+    private String routeName;
 
     /**
      * 路由路径
@@ -72,11 +87,6 @@ public class Menu extends BaseDomain {
     private String i18nKey;
 
     /**
-     * 可访问角色
-     */
-    private Object roles;
-
-    /**
      * 是否缓存
      */
     private Boolean keepAlive;
@@ -85,6 +95,11 @@ public class Menu extends BaseDomain {
      * 是否是常量路由
      */
     private Boolean constant;
+
+    /**
+     * 图标类型
+     */
+    private IconType iconType;
 
     /**
      * 菜单图标
@@ -100,12 +115,11 @@ public class Menu extends BaseDomain {
     /**
      * 排序
      */
-    private Integer order;
+    private Integer sort;
 
     /**
      * 外链链接
      */
-    @Length(max = -1, message = "外链链接(href)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String href;
 
     /**
@@ -132,5 +146,6 @@ public class Menu extends BaseDomain {
     /**
      * 查询参数
      */
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private Object query;
 }

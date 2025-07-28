@@ -1,26 +1,24 @@
 package com.modulix.admin.controller;
 
-import com.modulix.admin.service.MenuService;
-import org.springframework.web.bind.annotation.*;
-import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.MenuVO;
 import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.query.MenuQuery;
+import com.modulix.admin.service.MenuService;
+import com.modulix.admin.vo.MenuVO;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import com.modulix.framework.validation.common.ValidateGroup;
 import com.modulix.framework.web.aip.http.Response;
+import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import jakarta.validation.constraints.NotEmpty;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import org.springframework.validation.annotation.Validated;
-import com.modulix.framework.validation.common.ValidateGroup;
 
 /**
  * 菜单(Menu)表控制层
  *
  * @author lipanre
- * @since 2025-07-26 13:56:16
+ * @since 2025-07-28 22:51:56
  */
 @RestController
 @RequestMapping("/menu")
@@ -69,7 +67,7 @@ public class MenuController {
      * @return 列表
      */
     @PageRequest
-    @GetMapping
+    @GetMapping("/tree")
     public Response<List<MenuVO>> list(MenuQuery query) {
         return Response.success(menuService.list(query));
     }
