@@ -89,4 +89,10 @@ public class Role extends BaseDomain {
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private List<Long> menuIds;
+
+    /**
+     * 可操作的按钮编码列表
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<String> buttons;
 }
