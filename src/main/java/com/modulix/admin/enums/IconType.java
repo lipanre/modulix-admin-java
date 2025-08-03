@@ -1,7 +1,5 @@
 package com.modulix.admin.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,14 +12,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum IconType {
 
-    ICONIFY("iconify"),
+    ICONIFY,
 
-    LOCAL("local"),
+    LOCAL,
 
     ;
-
-    @EnumValue
-    @JsonValue
-    private final String code;
 
 }

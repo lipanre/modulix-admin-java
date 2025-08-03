@@ -47,7 +47,6 @@ public class Menu extends BaseDomain {
     /**
      * 父级id
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
 
     /**

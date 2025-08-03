@@ -4,15 +4,17 @@
 
     <resultMap id="domain-map" type="com.modulix.admin.domain.Role" autoMapping="true">
         <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="menuIds" column="menu_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="deptIds" column="dept_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
     </resultMap>
 
-    <resultMap id="vo-map" type="com.modulix.admin.vo.RoleVO" autoMapping="true">
+    <resultMap id="vo-map" type="com.modulix.admin.vo.RoleVO" autoMapping="true" extends="domain-map">
         <id property="id" column="id"/>
     </resultMap>
 
     <sql id="domain-sql">
         ${table-alias}.id as `${column-prefix}id`,
-        ${table-alias}.enable as `${column-prefix}enable`,
+        ${table-alias}.status as `${column-prefix}status`,
         ${table-alias}.name as `${column-prefix}name`,
         ${table-alias}.code as `${column-prefix}code`,
         ${table-alias}.description as `${column-prefix}description`,

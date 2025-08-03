@@ -1,24 +1,25 @@
 package com.modulix.admin.domain;
 
-import java.time.LocalDateTime;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.modulix.admin.dto.RoleDTO;
+import com.modulix.admin.enums.EnableStatus;
+import com.modulix.admin.query.RoleQuery;
+import com.modulix.admin.vo.RoleVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import com.modulix.framework.mybatis.plus.api.enums.DataScope;
+import com.modulix.framework.validation.common.ValidateGroup;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.vo.RoleVO;
-import com.modulix.admin.dto.RoleDTO;
-import com.modulix.admin.query.RoleQuery;
-import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import com.modulix.framework.validation.common.ValidateGroup;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 
 /**
@@ -29,7 +30,7 @@ import lombok.experimental.FieldNameConstants;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_role")
+@TableName(value = "sys_role", autoResultMap = true)
 @AutoMappers({
         @AutoMapper(target = RoleVO.class),
         @AutoMapper(target = RoleDTO.class),
@@ -43,7 +44,7 @@ public class Role extends BaseDomain {
      * 启用状态
      */
     @NotNull(message = "启用状态(enable)不能为空", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private Boolean enable;
+    private EnableStatus status;
 
     /**
      * 角色名称
@@ -69,12 +70,23 @@ public class Role extends BaseDomain {
     /**
      * 数据权限
      */
-    @Length(max = 20, message = "数据权限(dataScope)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private String dataScope;
+    private DataScope dataScope;
 
     /**
      * 首页路径
      */
     @Length(max = 50, message = "首页路径(home)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String home;
+
+    /**
+     * 部门id列表
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Long> deptIds;
+
+    /**
+     * 菜单id列表
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Long> menuIds;
 }

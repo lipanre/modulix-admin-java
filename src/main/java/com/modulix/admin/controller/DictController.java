@@ -95,5 +95,15 @@ public class DictController {
         return Response.success(dictService.detail(id));
     }
 
+    /**
+     * 查询所有字典
+     *
+     * @return 字典列表
+     */
+    @GetMapping("/all")
+    public Response<List<DictVO>> all() {
+        return Response.success(dictService.all());
+    }
+
 }
 

@@ -66,4 +66,11 @@ public interface DictService extends BaseService<Dict> {
      * @return 操作结果
      */
     Boolean upsetDetails(DictDetailDTO dto);
+
+    /**
+     * 查询所有字典
+     *
+     * @return 字典列表
+     */
+    List<DictVO> all();
 }

@@ -7,6 +7,7 @@ import com.modulix.admin.mapper.DictMapper;
 import com.modulix.admin.query.DictQuery;
 import com.modulix.admin.service.DictService;
 import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.common.core.util.TreeUtil;
 import com.modulix.framework.mybatis.plus.api.annotation.DeleteOperation;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -67,5 +69,11 @@ public class DictServiceImpl extends BaseServiceImpl<DictMapper, Dict> implement
         }
         List<Dict> dictDetails = converter.convert(dto.getDetails(), Dict.class);
         return saveOrUpdateBatch(dictDetails);
+    }
+
+    @Override
+    public List<DictVO> all() {
+        List<DictVO> dictVOList = converter.convert(list(), DictVO.class);
+        return TreeUtil.buildTree(dictVOList, Objects::isNull);
     }
 }

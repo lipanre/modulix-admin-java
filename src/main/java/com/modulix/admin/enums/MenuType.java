@@ -1,8 +1,6 @@
 package com.modulix.admin.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,18 +16,14 @@ public enum MenuType {
     /**
      * 目录
      */
-    DIR("dir"),
+    DIR,
 
     /**
      * 菜单
      */
-    MENU("menu"),
+    MENU,
 
     ;
-
-    @EnumValue
-    @JsonValue
-    private final String code;
 
 
 
