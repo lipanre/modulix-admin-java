@@ -1,6 +1,7 @@
 package com.modulix.admin.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.RequiredArgsConstructor;
  * @author lipanre
  */
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @JsonCreator)
 public enum MenuType {
 
     /**
@@ -29,5 +30,8 @@ public enum MenuType {
     @EnumValue
     @JsonValue
     private final String code;
+
+
+
 
 }

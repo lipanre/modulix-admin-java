@@ -55,4 +55,9 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     public MenuVO detail(Long id) {
         return baseMapper.getDetail(id);
     }
+
+    @Override
+    public List<String> listAllPage() {
+        return baseMapper.listPage();
+    }
 }

@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,6 +51,16 @@ public class MenuController {
     }
 
     /**
+     * 删除指定id的菜单
+     *
+     * @param id 菜单id
+     */
+    @DeleteMapping("/{id}")
+    public Response<Boolean> remove(@PathVariable Long id) {
+        return Response.success(menuService.removeBatch(Collections.singletonList(id)));
+    }
+
+    /**
      * 更新指定数据
      *
      * @param id  数据id
@@ -83,5 +94,14 @@ public class MenuController {
         return Response.success(menuService.detail(id));
     }
 
+    /**
+     * 页面列表
+     *
+     * @return 页面列表
+     */
+    @GetMapping("/all-page")
+    public Response<List<String>> getAllPage() {
+        return Response.success(menuService.listAllPage());
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.modulix.admin.service;
 
+import com.modulix.admin.dto.DictDetailDTO;
 import com.modulix.framework.mybatis.plus.api.base.BaseService;
 import com.modulix.admin.domain.Dict;
 import com.modulix.admin.vo.DictVO;
@@ -57,4 +58,12 @@ public interface DictService extends BaseService<Dict> {
      * @return 详情
      */
     DictVO detail(Long id);
+
+    /**
+     * 更新字典明细
+     *
+     * @param dto 字典明细dto
+     * @return 操作结果
+     */
+    Boolean upsetDetails(DictDetailDTO dto);
 }

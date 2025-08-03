@@ -1,17 +1,14 @@
 package com.modulix.admin.dto;
 
-import java.time.LocalDateTime;
-
-import com.modulix.admin.domain.Dict;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.modulix.admin.domain.Dict;
+import com.modulix.admin.query.DictQuery;
+import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.domain.Dict;
-import com.modulix.admin.vo.DictVO;
-import com.modulix.admin.query.DictQuery;
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -22,7 +19,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties({BaseDomain.Fields.id, BaseDomain.Fields.creatorId, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, BaseDomain.Fields.createTime, BaseDomain.Fields.modifyTime})
+@JsonIgnoreProperties({BaseDomain.Fields.creatorId, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, BaseDomain.Fields.createTime, BaseDomain.Fields.modifyTime})
 @AutoMappers({
         @AutoMapper(target = Dict.class),
         @AutoMapper(target = DictVO.class),

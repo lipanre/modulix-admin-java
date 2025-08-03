@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.modulix.framework.starter)
     implementation(libs.spring.boot.starter.test)
     implementation(libs.mysql.connector)
+    implementation(libs.commons.collections)
     annotationProcessor(libs.mapstruct.plus.processor)
 }
 

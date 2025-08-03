@@ -1,15 +1,14 @@
 package com.modulix.admin.mapper;
 
-import com.modulix.admin.domain.Dict;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.vo.DictVO;
-import com.modulix.admin.dto.DictDTO;
+import com.modulix.admin.domain.Dict;
 import com.modulix.admin.query.DictQuery;
+import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 import java.util.List;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import java.util.Objects;
 
 
 /**
@@ -29,6 +28,11 @@ public interface DictMapper extends BaseMapper<Dict> {
     default List<DictVO> list(DictQuery query) {
         MPJLambdaWrapper<Dict> wrapper = MPJWrappers.lambdaJoin();
         wrapper.selectAll(Dict.class);
+        wrapper.likeIfExists(Dict::getName, query.getName());
+        wrapper.likeIfExists(Dict::getCode, query.getCode());
+        wrapper.eqIfExists(Dict::getParentId, query.getParentId());
+        wrapper.isNull(Objects.isNull(query.getParentId()), Dict::getParentId);
+        wrapper.orderByAsc(Dict::getSort);
         wrapper.orderByDesc(Dict::getCreateTime);
         return selectJoinList(DictVO.class, wrapper);
     }

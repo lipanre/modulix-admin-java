@@ -1,20 +1,19 @@
 package com.modulix.admin.controller;
 
-import com.modulix.admin.service.DictService;
-import org.springframework.web.bind.annotation.*;
-import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.DictVO;
 import com.modulix.admin.dto.DictDTO;
+import com.modulix.admin.dto.DictDetailDTO;
 import com.modulix.admin.query.DictQuery;
+import com.modulix.admin.service.DictService;
+import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import com.modulix.framework.validation.common.ValidateGroup;
 import com.modulix.framework.web.aip.http.Response;
+import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import jakarta.validation.constraints.NotEmpty;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import org.springframework.validation.annotation.Validated;
-import com.modulix.framework.validation.common.ValidateGroup;
 
 /**
  * 字典(Dict)表控制层
@@ -38,6 +37,17 @@ public class DictController {
     @PostMapping
     public Response<Boolean> create(@RequestBody @Validated(ValidateGroup.Insert.class) DictDTO dto) {
         return Response.success(dictService.create(dto));
+    }
+
+    /**
+     * 添加字典明细
+     *
+     * @param dtoList 字典明细列表
+     * @return 操作结果
+     */
+    @PostMapping("/detail")
+    public Response<Boolean> upsetDetails(@RequestBody DictDetailDTO dto) {
+        return Response.success(dictService.upsetDetails(dto));
     }
 
     /**

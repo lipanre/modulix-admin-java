@@ -3,6 +3,8 @@ package com.modulix.admin.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.enums.EnableStatus;
 import com.modulix.admin.enums.IconType;
@@ -40,19 +42,19 @@ public class Menu extends BaseDomain {
     /**
      * 菜单类型
      */
-    @Length(max = 10, message = "菜单类型(type)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private MenuType type;
 
     /**
      * 父级id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
 
     /**
      * 菜单名称
      */
     @Length(max = 50, message = "菜单名称(name)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private String name;
+    private String label;
 
     /**
      * 启用状态
@@ -62,14 +64,14 @@ public class Menu extends BaseDomain {
     /**
      * 路由名称
      */
-    @Length(max = 50, message = "路由名称(name)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
+    @Length(max = 50, message = "路由名称(routeName)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String routeName;
 
     /**
      * 路由路径
      */
-    @Length(max = 50, message = "路由路径(path)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private String path;
+    @Length(max = 50, message = "路由路径(routePath)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
+    private String routePath;
 
     @Length(max = 50, message = "${column.comment}(component)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String component;
@@ -148,4 +150,9 @@ public class Menu extends BaseDomain {
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private Object query;
+
+    /**
+     * 页面组件
+     */
+    private String page;
 }

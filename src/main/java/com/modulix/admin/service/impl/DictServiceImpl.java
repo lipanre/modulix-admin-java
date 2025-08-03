@@ -1,14 +1,17 @@
 package com.modulix.admin.service.impl;
 
 import com.modulix.admin.domain.Dict;
+import com.modulix.admin.dto.DictDTO;
+import com.modulix.admin.dto.DictDetailDTO;
 import com.modulix.admin.mapper.DictMapper;
+import com.modulix.admin.query.DictQuery;
 import com.modulix.admin.service.DictService;
-import org.springframework.stereotype.Service;
+import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.mybatis.plus.api.annotation.DeleteOperation;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.DictVO;
-import com.modulix.admin.dto.DictDTO;
-import com.modulix.admin.query.DictQuery;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -32,6 +35,7 @@ public class DictServiceImpl extends BaseServiceImpl<DictMapper, Dict> implement
     }
 
     @Override
+    @DeleteOperation(value = Dict.class, condition = "parent_id in (#{#ids})")
     @Transactional(rollbackFor = Exception.class)
     public Boolean removeBatch(List<Long> ids) {
         return removeBatchByIds(ids);
@@ -53,5 +57,15 @@ public class DictServiceImpl extends BaseServiceImpl<DictMapper, Dict> implement
     @Override
     public DictVO detail(Long id) {
         return baseMapper.getDetail(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean upsetDetails(DictDetailDTO dto) {
+        if (CollectionUtils.isNotEmpty(dto.getRemoveIds())) {
+            removeByIds(dto.getRemoveIds());
+        }
+        List<Dict> dictDetails = converter.convert(dto.getDetails(), Dict.class);
+        return saveOrUpdateBatch(dictDetails);
     }
 }

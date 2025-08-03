@@ -57,4 +57,11 @@ public interface MenuService extends BaseService<Menu> {
      * @return 详情
      */
     MenuVO detail(Long id);
+
+    /**
+     * 查询页面列表
+     *
+     * @return 页面列表
+     */
+    List<String> listAllPage();
 }
