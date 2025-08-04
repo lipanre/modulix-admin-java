@@ -1,24 +1,19 @@
 package com.modulix.admin.domain;
 
-import java.time.LocalDateTime;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.github.linpeilie.annotations.AutoMapper;
-import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.vo.DeptVO;
 import com.modulix.admin.dto.DeptDTO;
 import com.modulix.admin.query.DeptQuery;
-import lombok.EqualsAndHashCode;
+import com.modulix.admin.vo.DeptVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import com.modulix.framework.validation.common.ValidateGroup;
+import io.github.linpeilie.annotations.AutoMapper;
+import io.github.linpeilie.annotations.AutoMappers;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import com.modulix.framework.validation.common.ValidateGroup;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.validator.constraints.Length;
 
 
 /**
@@ -49,7 +44,6 @@ public class Dept extends BaseDomain {
     /**
      * 上级部门id
      */
-    @NotNull(message = "上级部门id(parentId)不能为空", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private Long parentId;
 
     /**

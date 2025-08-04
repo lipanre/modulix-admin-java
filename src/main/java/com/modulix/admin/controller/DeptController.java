@@ -1,20 +1,18 @@
 package com.modulix.admin.controller;
 
-import com.modulix.admin.service.DeptService;
-import org.springframework.web.bind.annotation.*;
-import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.DeptVO;
 import com.modulix.admin.dto.DeptDTO;
 import com.modulix.admin.query.DeptQuery;
+import com.modulix.admin.service.DeptService;
+import com.modulix.admin.vo.DeptVO;
+import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
+import com.modulix.framework.validation.common.ValidateGroup;
 import com.modulix.framework.web.aip.http.Response;
+import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import jakarta.validation.constraints.NotEmpty;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import org.springframework.validation.annotation.Validated;
-import com.modulix.framework.validation.common.ValidateGroup;
 
 /**
  * (Dept)表控制层
@@ -85,5 +83,13 @@ public class DeptController {
         return Response.success(deptService.detail(id));
     }
 
+    /**
+     * 部门树
+     *
+     */
+    @GetMapping("/tree")
+    public Response<List<DeptVO>> tree() {
+       return Response.success(deptService.tree());
+    }
 }
 

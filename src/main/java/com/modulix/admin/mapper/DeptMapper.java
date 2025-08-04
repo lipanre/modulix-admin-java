@@ -1,15 +1,13 @@
 package com.modulix.admin.mapper;
 
-import com.modulix.admin.domain.Dept;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.vo.DeptVO;
-import com.modulix.admin.dto.DeptDTO;
+import com.modulix.admin.domain.Dept;
 import com.modulix.admin.query.DeptQuery;
+import com.modulix.admin.vo.DeptVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 import java.util.List;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
@@ -29,6 +27,8 @@ public interface DeptMapper extends BaseMapper<Dept> {
     default List<DeptVO> list(DeptQuery query) {
         MPJLambdaWrapper<Dept> wrapper = MPJWrappers.lambdaJoin();
         wrapper.selectAll(Dept.class);
+        wrapper.eqIfExists(Dept::getParentId, query.getParentId());
+        wrapper.isNull(Dept::getParentId);
         wrapper.orderByDesc(Dept::getCreateTime);
         return selectJoinList(DeptVO.class, wrapper);
     }

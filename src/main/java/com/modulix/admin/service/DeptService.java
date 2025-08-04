@@ -57,4 +57,9 @@ public interface DeptService extends BaseService<Dept> {
      * @return 详情
      */
     DeptVO detail(Long id);
+
+    /**
+     * 部门树
+     */
+    List<DeptVO> tree();
 }

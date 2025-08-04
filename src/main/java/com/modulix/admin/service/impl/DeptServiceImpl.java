@@ -3,6 +3,7 @@ package com.modulix.admin.service.impl;
 import com.modulix.admin.domain.Dept;
 import com.modulix.admin.mapper.DeptMapper;
 import com.modulix.admin.service.DeptService;
+import com.modulix.framework.common.core.util.TreeUtil;
 import org.springframework.stereotype.Service;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import com.modulix.admin.query.DeptQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -53,5 +55,12 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     @Override
     public DeptVO detail(Long id) {
         return baseMapper.getDetail(id);
+    }
+
+    @Override
+    public List<DeptVO> tree() {
+        List<Dept> deptList = list();
+        List<DeptVO> deptVOList = converter.convert(deptList, DeptVO.class);
+        return TreeUtil.buildTree(deptVOList, Objects::isNull);
     }
 }
