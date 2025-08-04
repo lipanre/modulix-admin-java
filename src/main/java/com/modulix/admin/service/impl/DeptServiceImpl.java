@@ -4,6 +4,7 @@ import com.modulix.admin.domain.Dept;
 import com.modulix.admin.mapper.DeptMapper;
 import com.modulix.admin.service.DeptService;
 import com.modulix.framework.common.core.util.TreeUtil;
+import com.modulix.framework.mybatis.plus.api.annotation.DeleteOperation;
 import org.springframework.stereotype.Service;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DeleteOperation(value = Dept.class, condition = "parent_id in #{#ids}")
     public Boolean removeBatch(List<Long> ids) {
         return removeBatchByIds(ids);
     }
