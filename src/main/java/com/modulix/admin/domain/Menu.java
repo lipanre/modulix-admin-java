@@ -3,8 +3,6 @@ package com.modulix.admin.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.enums.EnableStatus;
 import com.modulix.admin.enums.IconType;
@@ -19,6 +17,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 
 /**
@@ -148,10 +148,28 @@ public class Menu extends BaseDomain {
      * 查询参数
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private Object query;
+    private List<Query> query;
 
     /**
      * 页面组件
      */
     private String page;
+
+    /**
+     * 按钮列表
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Button> buttons;
+
+    @Data
+    public static class Button {
+        private String code;
+        private String desc;
+    }
+
+    @Data
+    public static class Query {
+        private String key;
+        private String value;
+    }
 }

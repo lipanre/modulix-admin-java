@@ -1,15 +1,16 @@
 package com.modulix.admin.service.impl;
 
 import com.modulix.admin.domain.Menu;
+import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.mapper.MenuMapper;
+import com.modulix.admin.query.MenuQuery;
 import com.modulix.admin.service.MenuService;
+import com.modulix.admin.vo.MenuButtonVO;
+import com.modulix.admin.vo.MenuVO;
 import com.modulix.framework.common.core.util.TreeUtil;
-import org.springframework.stereotype.Service;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.MenuVO;
-import com.modulix.admin.dto.MenuDTO;
-import com.modulix.admin.query.MenuQuery;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -59,5 +60,11 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     @Override
     public List<String> listAllPage() {
         return baseMapper.listPage();
+    }
+
+    @Override
+    public List<MenuButtonVO> listMenuButtons() {
+        List<Menu> menus = baseMapper.listMenuButtons();
+        return converter.convert(menus, MenuButtonVO.class);
     }
 }

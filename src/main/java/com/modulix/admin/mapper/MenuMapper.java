@@ -1,7 +1,6 @@
 package com.modulix.admin.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.modulix.admin.domain.Menu;
@@ -53,9 +52,14 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 页面列表
      */
     default List<String> listPage() {
-        LambdaQueryWrapper<Menu> wrapper = Wrappers.lambdaQuery(Menu.class);
+        MPJLambdaWrapper<Menu> wrapper = JoinWrappers.lambda(Menu.class);
         wrapper.select(Menu::getRouteName);
         return selectColumnList(wrapper, Menu::getRouteName);
     }
+
+    /**
+     * 查询菜单按钮列表
+     */
+    List<Menu> listMenuButtons();
 }
 

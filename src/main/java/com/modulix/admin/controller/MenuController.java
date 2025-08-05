@@ -3,6 +3,7 @@ package com.modulix.admin.controller;
 import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.query.MenuQuery;
 import com.modulix.admin.service.MenuService;
+import com.modulix.admin.vo.MenuButtonVO;
 import com.modulix.admin.vo.MenuVO;
 import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
 import com.modulix.framework.validation.common.ValidateGroup;
@@ -102,6 +103,16 @@ public class MenuController {
     @GetMapping("/all-page")
     public Response<List<String>> getAllPage() {
         return Response.success(menuService.listAllPage());
+    }
+
+    /**
+     * 查询菜单按钮列表
+     *
+     * @return 菜单按钮列表
+     */
+    @GetMapping("/page-buttons")
+    public Response<List<MenuButtonVO>> listMenuButtons() {
+        return Response.success(menuService.listMenuButtons());
     }
 }
 

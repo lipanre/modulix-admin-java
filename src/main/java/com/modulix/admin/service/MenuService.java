@@ -1,5 +1,6 @@
 package com.modulix.admin.service;
 
+import com.modulix.admin.vo.MenuButtonVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseService;
 import com.modulix.admin.domain.Menu;
 import com.modulix.admin.vo.MenuVO;
@@ -64,4 +65,11 @@ public interface MenuService extends BaseService<Menu> {
      * @return 页面列表
      */
     List<String> listAllPage();
+
+    /**
+     * 查询菜单按钮列表
+     *
+     * @return 菜单按钮列表
+     */
+    List<MenuButtonVO> listMenuButtons();
 }
