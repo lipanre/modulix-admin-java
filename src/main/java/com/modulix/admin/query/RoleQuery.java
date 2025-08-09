@@ -1,17 +1,16 @@
 package com.modulix.admin.query;
 
-import java.time.LocalDateTime;
-
-import com.modulix.admin.domain.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.modulix.admin.domain.Role;
+import com.modulix.admin.dto.RoleDTO;
+import com.modulix.admin.vo.RoleVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.domain.Role;
-import com.modulix.admin.vo.RoleVO;
-import com.modulix.admin.dto.RoleDTO;
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 
 /**
@@ -29,6 +28,11 @@ import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
         @AutoMapper(target = RoleVO.class),
 })
 public class RoleQuery extends Role {
+
+    /**
+     * 角色id列表
+     */
+    private List<Long> ids;
 
 }
 

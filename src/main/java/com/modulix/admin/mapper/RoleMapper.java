@@ -1,15 +1,14 @@
 package com.modulix.admin.mapper;
 
-import com.modulix.admin.domain.Role;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.modulix.admin.vo.RoleVO;
-import com.modulix.admin.dto.RoleDTO;
+import com.modulix.admin.domain.Role;
 import com.modulix.admin.query.RoleQuery;
+import com.modulix.admin.vo.RoleVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 
 /**
@@ -29,6 +28,7 @@ public interface RoleMapper extends BaseMapper<Role> {
     default List<RoleVO> list(RoleQuery query) {
         MPJLambdaWrapper<Role> wrapper = MPJWrappers.lambdaJoin();
         wrapper.selectAll(Role.class);
+        wrapper.in(CollectionUtils.isNotEmpty(query.getIds()), Role::getId, query.getIds());
         wrapper.orderByDesc(Role::getCreateTime);
         return selectJoinList(RoleVO.class, wrapper);
     }

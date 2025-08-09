@@ -1,24 +1,18 @@
 package com.modulix.admin.domain;
 
-import java.time.LocalDateTime;
-
-import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.github.linpeilie.annotations.AutoMapper;
-import io.github.linpeilie.annotations.AutoMappers;
-import com.modulix.admin.vo.DictVO;
 import com.modulix.admin.dto.DictDTO;
 import com.modulix.admin.query.DictQuery;
-import lombok.EqualsAndHashCode;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
+import com.modulix.admin.vo.DictVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 import com.modulix.framework.validation.common.ValidateGroup;
+import io.github.linpeilie.annotations.AutoMapper;
+import io.github.linpeilie.annotations.AutoMappers;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.validator.constraints.Length;
 
 
 /**
@@ -68,4 +62,9 @@ public class Dict extends BaseDomain {
      */
     @Length(max = 200, message = "字典描述(description)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String description;
+
+    /**
+     * 字典标签颜色
+     */
+    private String color;
 }

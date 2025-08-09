@@ -4,6 +4,7 @@
 
     <resultMap id="domain-map" type="com.modulix.admin.domain.User" autoMapping="true">
         <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roleIds" column="role_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
     </resultMap>
 
     <resultMap id="vo-map" type="com.modulix.admin.vo.UserVO" autoMapping="true">
@@ -20,7 +21,8 @@
         ${table-alias}.gender as `${column-prefix}gender`,
         ${table-alias}.email as `${column-prefix}email`,
         ${table-alias}.enable as `${column-prefix}enable`,
-        ${table-alias}.home as `${column-prefix}home`,
+        ${table-alias}.home_role_id as `${column-prefix}home_role_id`,
+        ${table-alias}.role_ids as `${column-prefix}role_ids`,
         ${table-alias}.create_time as `${column-prefix}create_time`,
         ${table-alias}.modify_time as `${column-prefix}modify_time`,
         ${table-alias}.creator_id as `${column-prefix}creator_id`,

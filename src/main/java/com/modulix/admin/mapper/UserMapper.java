@@ -3,6 +3,7 @@ package com.modulix.admin.mapper;
 import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.modulix.admin.domain.Dept;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.admin.vo.UserVO;
@@ -28,6 +29,11 @@ public interface UserMapper extends BaseMapper<User> {
     default List<UserVO> list(UserQuery query) {
         MPJLambdaWrapper<User> wrapper = MPJWrappers.lambdaJoin();
         wrapper.selectAll(User.class);
+        wrapper.selectAssociation(Dept.class, UserVO::getDeptName, map -> map.result(Dept::getName));
+        wrapper.leftJoin(Dept.class, Dept::getId, User::getDeptId);
+        wrapper.likeIfExists(User::getUsername, query.getUsername());
+        wrapper.likeIfExists(User::getNickname, query.getNickname());
+        wrapper.eqIfExists(User::getDeptId, query.getDeptId());
         wrapper.orderByDesc(User::getCreateTime);
         return selectJoinList(UserVO.class, wrapper);
     }

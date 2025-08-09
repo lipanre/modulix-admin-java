@@ -27,5 +27,10 @@ import lombok.EqualsAndHashCode;
 })
 public class UserVO extends User {
 
+    /**
+     * 部门名称
+     */
+    private String deptName;
+
 }
 

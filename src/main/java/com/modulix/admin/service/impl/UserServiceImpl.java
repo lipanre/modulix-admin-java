@@ -3,6 +3,8 @@ package com.modulix.admin.service.impl;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.mapper.UserMapper;
 import com.modulix.admin.service.UserService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +26,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public Boolean create(UserDTO dto) {
         User domain = converter.convert(dto, User.class);
+        if (StringUtils.isNotEmpty(dto.getPassword())) {
+            domain.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         return save(domain);
     }
 

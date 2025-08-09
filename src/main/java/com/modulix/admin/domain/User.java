@@ -1,7 +1,10 @@
 package com.modulix.admin.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.modulix.admin.dto.UserDTO;
+import com.modulix.admin.enums.EnableStatus;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
@@ -16,6 +19,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 
 /**
@@ -73,7 +78,6 @@ public class User extends BaseDomain {
     /**
      * 性别
      */
-    @Length(max = 1, message = "性别(gender)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String gender;
 
     /**
@@ -86,11 +90,16 @@ public class User extends BaseDomain {
      * 启用状态
      */
     @NotNull(message = "启用状态(enable)不能为空", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private Boolean enable;
+    private EnableStatus enable;
 
     /**
      * 首页
      */
-    @Length(max = 50, message = "首页(home)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    private String home;
+    private Long homeRoleId;
+
+    /**
+     * 角色id列表
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Long> roleIds;
 }
