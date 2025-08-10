@@ -74,4 +74,12 @@ public interface UserService extends BaseService<User> {
      * @return 用户信息
      */
     UserInfo getUserInfo(long userId);
+
+    /**
+     * 获取指定用户首页
+     *
+     * @param userId 用户id
+     * @return 首页
+     */
+    String getUserHome(long userId);
 }

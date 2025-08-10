@@ -8,6 +8,7 @@ import com.modulix.admin.domain.Menu;
 import com.modulix.admin.query.MenuQuery;
 import com.modulix.admin.vo.MenuButtonVO;
 import com.modulix.admin.vo.MenuVO;
+import com.modulix.admin.vo.RouteVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
 import java.util.List;
@@ -68,5 +69,20 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 菜单按钮列表
      */
     List<MenuButtonVO> listMenuButton(MenuQuery query);
+
+    /**
+     * 获取指定用户的路由列表
+     *
+     * @param userId 用户id
+     * @return 路由列表
+     */
+    List<RouteVO> listUserRoute(long userId);
+
+    /**
+     * 获取常量路由
+     *
+     * @return 常量路由
+     */
+    List<RouteVO> listConstantRoute();
 }
 

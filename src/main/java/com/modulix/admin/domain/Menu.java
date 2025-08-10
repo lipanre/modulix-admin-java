@@ -7,6 +7,7 @@ import com.modulix.admin.dto.MenuDTO;
 import com.modulix.admin.enums.EnableStatus;
 import com.modulix.admin.enums.IconType;
 import com.modulix.admin.enums.MenuType;
+import com.modulix.admin.menu.MenuQueryParam;
 import com.modulix.admin.query.MenuQuery;
 import com.modulix.admin.vo.MenuVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
@@ -148,16 +149,21 @@ public class Menu extends BaseDomain {
      * 查询参数
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<Query> query;
+    private List<MenuQueryParam> query;
 
     /**
      * 页面组件
      */
     private String page;
 
-    @Data
-    public static class Query {
-        private String key;
-        private String value;
-    }
+    /**
+     * 路径参数
+     */
+    private String pathParam;
+
+    /**
+     * 布局
+     */
+    private String layout;
+
 }

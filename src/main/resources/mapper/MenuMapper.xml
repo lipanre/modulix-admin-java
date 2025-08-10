@@ -23,5 +23,50 @@
             </foreach>
         </if>
     </select>
+
+    <resultMap id="route-result-map" type="com.modulix.admin.vo.RouteVO">
+        <id property="id" column="sm_id" />
+        <result property="name" column="sm_route_name" />
+        <result property="path" column="path" />
+        <result property="path" column="sm_route_path" />
+        <result property="component" column="sm_component" />
+        <result property="parentId" column="sm_parent_id" />
+        <association property="meta" columnPrefix="sm_" javaType="com.modulix.admin.vo.RouteVO$Meta" autoMapping="true">
+            <result property="order" column="sort" />
+            <result property="query" column="query" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        </association>
+    </resultMap>
+
+    <select id="listUserRoute" resultMap="route-result-map">
+        with recursive menu as (
+            select distinct sm.id, sm.parent_id
+            from sys_user su
+            left join sys_role sr on sr.deleted = false and IF(su.super_admin, true, json_contains(su.role_ids,cast(sr.id as char)))
+            left join sys_menu sm on sm.deleted = false and IF(su.super_admin, true, json_contains(sr.menu_ids, cast(sm.id as char)))
+            where su.deleted = false and su.id = #{userId}
+            union
+            select parent.id, parent.parent_id
+            from menu child
+            left join sys_menu parent on parent.deleted = false and parent.id = child.parent_id
+        )
+        select
+        <include refid="domain-sql">
+            <property name="table-alias" value="sm"/>
+            <property name="column-prefix" value="sm_"/>
+        </include>
+        from menu m
+        join sys_menu sm on sm.id = m.id 
+    </select>
+
+    <select id="listConstantRoute" resultMap="route-result-map">
+        select
+        concat(sm.route_path, '/:', sm.path_param) as path,
+        <include refid="domain-sql">
+            <property name="table-alias" value="sm"/>
+            <property name="column-prefix" value="sm_"/>
+        </include>
+        from sys_menu sm
+        where sm.deleted = false and sm.constant = true
+    </select>
 </mapper>
 

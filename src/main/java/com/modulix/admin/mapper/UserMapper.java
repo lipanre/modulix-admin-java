@@ -5,6 +5,7 @@ import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.modulix.admin.domain.Dept;
+import com.modulix.admin.domain.Role;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.admin.vo.UserInfo;
@@ -83,5 +84,19 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 用户信息
      */
     UserInfo getUserInfo(long userId);
+
+    /**
+     * 获取制定用户首页
+     *
+     * @param userId 用户id
+     * @return 首页
+     */
+    default Role getUserHome(long userId) {
+        MPJLambdaWrapper<User> wrapper = JoinWrappers.lambda(User.class);
+        wrapper.select(Role::getHome);
+        wrapper.innerJoin(Role.class, Role::getId, User::getHomeRoleId);
+        wrapper.eq(User::getId, userId);
+        return selectJoinOne(Role.class, wrapper);
+    }
 }
 

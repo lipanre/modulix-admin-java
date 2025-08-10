@@ -1,6 +1,7 @@
 package com.modulix.admin.service.impl;
 
 import cn.hutool.crypto.digest.BCrypt;
+import com.modulix.admin.domain.Role;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.dto.UserDTO;
 import com.modulix.admin.mapper.UserMapper;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -29,6 +31,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService, SecurityContext {
 
+
+    public static final String DEFAULT_HOME = "home";
 
     @Override
     public Boolean create(UserDTO dto) {
@@ -71,6 +75,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public UserInfo getUserInfo(long userId) {
         return baseMapper.getUserInfo(userId);
+    }
+
+    @Override
+    public String getUserHome(long userId) {
+        Role role = baseMapper.getUserHome(userId);
+        if (Objects.isNull(role)) {
+            // 默认首页
+            return DEFAULT_HOME;
+        }
+        return role.getHome();
     }
 
     @Override
