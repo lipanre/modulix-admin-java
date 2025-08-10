@@ -18,6 +18,8 @@ dependencies {
     implementation(libs.spring.boot.starter.test)
     implementation(libs.mysql.connector)
     implementation(libs.commons.collections)
+    implementation(libs.hutool.core)
+    implementation(libs.hutool.crypto)
     annotationProcessor(libs.mapstruct.plus.processor)
 }
 

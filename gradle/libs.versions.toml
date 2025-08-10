@@ -9,12 +9,16 @@ modulix-framework-version = "0.0.12"
 mysql-connector-version = "8.4.0"
 mapstruct-plus-version = "1.4.8"
 commons-collections-version = "4.5.0"
+hutool-version = "5.8.39"
 
 
 [libraries]
 mysql-connector = {module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector-version"}
 modulix-framework-starter = { module = "io.github.lipanre:modulix-framework-starter", version.ref = "modulix-framework-version" }
 mapstruct-plus-processor = { module = "io.github.linpeilie:mapstruct-plus-processor", version.ref = "mapstruct-plus-version" }
+hutool-bom = { module = "cn.hutool:hutool-bom", version.ref="hutool-version"}
+hutool-core = { module = "cn.hutool:hutool-core", version.ref="hutool-version"}
+hutool-crypto = { module = "cn.hutool:hutool-crypto", version.ref="hutool-version"}
 
 
 # spring

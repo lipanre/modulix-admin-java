@@ -2,5 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.modulix.admin.mapper.UserMapper">
 
+
+    <select id="listDataScopes" resultType="com.modulix.framework.mybatis.plus.api.enums.DataScope">
+        select sr.data_scope
+        from sys_user su
+        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, sr.id)
+        where su.id = #{userId}
+    </select>
+
+    <resultMap id="userinfo-result-map" type="com.modulix.admin.vo.UserInfo">
+        <id property="id" column="id" />
+        <result property="username" column="username" />
+        <collection property="roles" column="code" ofType="java.lang.String"/>
+    </resultMap>
+
+    <select id="getUserInfo" resultMap="userinfo-result-map">
+        select su.id, su.username, sr.code
+        from sys_user su
+        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, sr.id)
+        where su.deleted = false and su.id = #{userId}
+    </select>
 </mapper>
 

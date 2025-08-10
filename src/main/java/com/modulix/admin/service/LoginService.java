@@ -1,10 +1,13 @@
 package com.modulix.admin.service;
 
-import com.modulix.framework.mybatis.plus.api.base.BaseService;
 import com.modulix.admin.domain.Login;
-import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.domain.login.AccountDTO;
 import com.modulix.admin.dto.LoginDTO;
 import com.modulix.admin.query.LoginQuery;
+import com.modulix.admin.vo.LoginInfo;
+import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.vo.UserInfo;
+import com.modulix.framework.mybatis.plus.api.base.BaseService;
 
 import java.util.List;
 
@@ -57,4 +60,26 @@ public interface LoginService extends BaseService<Login> {
      * @return 详情
      */
     LoginVO detail(Long id);
+
+    /**
+     * 用户名密码登录
+     *
+     * @param dto 账户dto
+     * @return 登录信息
+     */
+    LoginInfo login(AccountDTO dto);
+
+    /**
+     * 刷新token
+     *
+     * @return 刷新之后的登录信息
+     */
+    LoginInfo refresh(LoginInfo loginInfo);
+
+    /**
+     * 获取当前登录用户的用户信息
+     *
+     * @return 用户信息
+     */
+    UserInfo getUserInfo(long userId);
 }

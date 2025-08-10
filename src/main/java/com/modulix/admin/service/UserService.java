@@ -1,5 +1,6 @@
 package com.modulix.admin.service;
 
+import com.modulix.admin.vo.UserInfo;
 import com.modulix.framework.mybatis.plus.api.base.BaseService;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.vo.UserVO;
@@ -65,4 +66,12 @@ public interface UserService extends BaseService<User> {
      * @return 用户信息
      */
     User getUserByUsername(String username);
+
+    /**
+     * 获取制定用户的用户信息
+     *
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    UserInfo getUserInfo(long userId);
 }

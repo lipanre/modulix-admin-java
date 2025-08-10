@@ -1,19 +1,29 @@
 package com.modulix.admin.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.crypto.digest.BCrypt;
 import com.modulix.admin.domain.Login;
-import com.modulix.admin.mapper.LoginMapper;
-import com.modulix.admin.service.LoginService;
-import org.springframework.stereotype.Service;
-import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
-import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.domain.User;
+import com.modulix.admin.domain.login.AccountDTO;
 import com.modulix.admin.dto.LoginDTO;
+import com.modulix.admin.mapper.LoginMapper;
 import com.modulix.admin.query.LoginQuery;
+import com.modulix.admin.service.LoginService;
+import com.modulix.admin.service.UserService;
+import com.modulix.admin.vo.LoginInfo;
+import com.modulix.admin.vo.LoginVO;
+import com.modulix.admin.vo.UserInfo;
+import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
+import com.modulix.framework.web.aip.exception.BizException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -24,7 +34,12 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, Login> implements LoginService, com.modulix.framework.security.api.LoginService {
+public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, Login> implements LoginService {
+
+    private final UserService userService;
+
+    @Value("${sa-token.refresh-token.timeout:2592000}")
+    private long refreshTokenExpire;
 
 
     @Override
@@ -58,22 +73,30 @@ public class LoginServiceImpl extends BaseServiceImpl<LoginMapper, Login> implem
     }
 
     @Override
-    public void recordLoginInfo(String userId, String refreshToken, Duration refreshExpiration, String clientId) {
-        Login login = new Login();
-        login.setUserInfo(userId);
-        login.setRefreshToken(refreshToken);
-        login.setExpireTime(LocalDateTime.now().plus(refreshExpiration));
-        login.setClientId(clientId);
-        save(login);
+    public LoginInfo login(AccountDTO dto) {
+        User user = userService.getUserByUsername(dto.getUsername());
+        if (Objects.isNull(user)) {
+            throw new BizException("用户不存在");
+        }
+        if (!BCrypt.checkpw(dto.getPassword(), user.getPassword())) {
+            throw new BizException("用户名或密码错误");
+        }
+        StpUtil.login(user.getId());
+        LoginInfo loginInfo = converter.convert(StpUtil.getTokenInfo(), LoginInfo.class);
+        loginInfo.setRefreshToken(SaTempUtil.createToken(user.getId(), refreshTokenExpire));
+        return loginInfo;
     }
 
     @Override
-    public String getUserId(String refreshToken) {
-        return baseMapper.getUserId(refreshToken);
+    public LoginInfo refresh(LoginInfo loginInfo) {
+        Assert.notEmpty(loginInfo.getRefreshToken(), "refreshToken不能为空");
+        Long userId = SaTempUtil.parseToken(loginInfo.getRefreshToken(), Long.class);
+        loginInfo.setToken(StpUtil.createLoginSession(userId));
+        return loginInfo;
     }
 
     @Override
-    public Boolean removeLoginInfo(Long userId, String clientId) {
-        return baseMapper.removeLoginInfo(userId, clientId);
+    public UserInfo getUserInfo(long userId) {
+        return userService.getUserInfo(userId);
     }
 }

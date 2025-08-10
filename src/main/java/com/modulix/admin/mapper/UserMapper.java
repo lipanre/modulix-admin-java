@@ -1,13 +1,16 @@
 package com.modulix.admin.mapper;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.modulix.admin.domain.Dept;
 import com.modulix.admin.domain.User;
 import com.modulix.admin.query.UserQuery;
+import com.modulix.admin.vo.UserInfo;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
+import com.modulix.framework.mybatis.plus.api.enums.DataScope;
 
 import java.util.List;
 
@@ -62,5 +65,22 @@ public interface UserMapper extends BaseMapper<User> {
         wrapper.eq(User::getUsername, username);
         return selectJoinOne(wrapper);
     }
+
+    /**
+     * 查询指定用户的数据权限列表
+     *
+     * @param userId 用户id
+     * @return 数据权限
+     */
+    @InterceptorIgnore(others = "page@true")
+    List<DataScope> listDataScopes(Long userId);
+
+    /**
+     * 获取制定用户的用户信息
+     *
+     * @param userId 用户id
+     * @return 用户信息
+     */
+    UserInfo getUserInfo(long userId);
 }
 

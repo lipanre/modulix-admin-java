@@ -8,8 +8,6 @@ import com.modulix.admin.enums.EnableStatus;
 import com.modulix.admin.query.UserQuery;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
-import com.modulix.framework.security.api.auth.UserInfo;
-import com.modulix.framework.security.api.auth.admin.AdminAccountAuthentication;
 import com.modulix.framework.validation.common.ValidateGroup;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
@@ -36,8 +34,6 @@ import java.util.List;
         @AutoMapper(target = UserVO.class),
         @AutoMapper(target = UserDTO.class),
         @AutoMapper(target = UserQuery.class),
-        @AutoMapper(target = AdminAccountAuthentication.class),
-        @AutoMapper(target = UserInfo.class),
 })
 @FieldNameConstants
 public class User extends BaseDomain {

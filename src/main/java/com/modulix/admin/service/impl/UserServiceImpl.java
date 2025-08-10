@@ -1,16 +1,19 @@
 package com.modulix.admin.service.impl;
 
+import cn.hutool.crypto.digest.BCrypt;
 import com.modulix.admin.domain.User;
-import com.modulix.admin.mapper.UserMapper;
-import com.modulix.admin.service.UserService;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
-import lombok.RequiredArgsConstructor;
-import com.modulix.admin.vo.UserVO;
 import com.modulix.admin.dto.UserDTO;
+import com.modulix.admin.mapper.UserMapper;
 import com.modulix.admin.query.UserQuery;
+import com.modulix.admin.service.UserService;
+import com.modulix.admin.vo.UserInfo;
+import com.modulix.admin.vo.UserVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
+import com.modulix.framework.mybatis.plus.api.enums.DataScope;
+import com.modulix.framework.security.api.SecurityContext;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,16 +27,14 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
-
-    private final PasswordEncoder passwordEncoder;
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService, SecurityContext {
 
 
     @Override
     public Boolean create(UserDTO dto) {
         User domain = converter.convert(dto, User.class);
         if (StringUtils.isNotEmpty(dto.getPassword())) {
-            domain.setPassword(passwordEncoder.encode(dto.getPassword()));
+            domain.setPassword(BCrypt.hashpw(dto.getPassword()));
         }
         return save(domain);
     }
@@ -65,5 +66,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public User getUserByUsername(String username) {
         return baseMapper.getByUsername(username);
+    }
+
+    @Override
+    public UserInfo getUserInfo(long userId) {
+        return baseMapper.getUserInfo(userId);
+    }
+
+    @Override
+    public List<DataScope> getDataScopes(Long userId) {
+        return baseMapper.listDataScopes(userId);
     }
 }
