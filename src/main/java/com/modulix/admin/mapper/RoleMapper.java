@@ -39,11 +39,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param id id
      * @return 详情
      */
-    default RoleVO getDetail(Long id) {
-        MPJLambdaWrapper<Role> wrapper = MPJWrappers.lambdaJoin();
-        wrapper.selectAll(Role.class);
-        wrapper.eq(Role::getId, id);
-        return selectJoinOne(RoleVO.class, wrapper);
-    }
+    RoleVO getDetail(Long id);
 }
 

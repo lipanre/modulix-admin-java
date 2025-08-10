@@ -1,21 +1,20 @@
 package com.modulix.admin.service;
 
-import com.modulix.admin.domain.Menu;
-import com.modulix.admin.dto.MenuDTO;
-import com.modulix.admin.query.MenuQuery;
-import com.modulix.admin.vo.MenuButtonVO;
-import com.modulix.admin.vo.MenuVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseService;
+import com.modulix.admin.domain.Button;
+import com.modulix.admin.vo.ButtonVO;
+import com.modulix.admin.dto.ButtonDTO;
+import com.modulix.admin.query.ButtonQuery;
 
 import java.util.List;
 
 /**
- * 菜单(Menu)表服务接口
+ * (Button)表服务接口
  *
  * @author lipanre
- * @since 2025-07-28 22:51:56
+ * @since 2025-08-10 16:07:33
  */
-public interface MenuService extends BaseService<Menu> {
+public interface ButtonService extends BaseService<Button> {
 
     /**
      * 创建
@@ -24,7 +23,7 @@ public interface MenuService extends BaseService<Menu> {
      * @return true - 成功  <br>
      * false - 失败
      */
-    Boolean create(MenuDTO dto);
+    Boolean create(ButtonDTO dto);
 
     /**
      * 删除
@@ -41,7 +40,7 @@ public interface MenuService extends BaseService<Menu> {
      * @param dto dto
      * @return true - 成功 <br> false - 失败
      */
-    Boolean update(Long id, MenuDTO dto);
+    Boolean update(Long id, ButtonDTO dto);
 
     /**
      * 查询符合条件的列表
@@ -49,7 +48,7 @@ public interface MenuService extends BaseService<Menu> {
      * @param query 查询条件
      * @return 列表
      */
-    List<MenuVO> list(MenuQuery query);
+    List<ButtonVO> list(ButtonQuery query);
 
     /**
      * 查询详情
@@ -57,20 +56,22 @@ public interface MenuService extends BaseService<Menu> {
      * @param id id
      * @return 详情
      */
-    MenuVO detail(Long id);
+    ButtonVO detail(Long id);
 
     /**
-     * 查询页面列表
+     * 创建按钮
      *
-     * @return 页面列表
+     * @param menuId 菜单id
+     * @param dtoList 按钮列表
      */
-    List<String> listAllPage();
+    void createButton(Long menuId, List<ButtonDTO> dtoList);
 
     /**
-     * 查询符合条件的菜单按钮列表
+     * 更新按钮
      *
-     * @param query 查询条件
-     * @return 菜单按钮列表
+     * @param dtoList    按钮列表
+     * @param menuId    菜单id
+     * @param deleteIds 按钮列表
      */
-    List<MenuButtonVO> listMenuButton(MenuQuery query);
+    void updateButtons(Long menuId, List<ButtonDTO> dtoList, List<Long> deleteIds);
 }

@@ -5,13 +5,11 @@
     <resultMap id="domain-map" type="com.modulix.admin.domain.Menu" autoMapping="true">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="query" column="query" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-        <result property="buttons" column="buttons" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
     </resultMap>
 
     <resultMap id="vo-map" type="com.modulix.admin.vo.MenuVO" autoMapping="true">
         <id property="id" column="id"/>
         <result property="query" column="query" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
-        <result property="buttons" column="buttons" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
     </resultMap>
 
     <sql id="domain-sql">
@@ -39,7 +37,6 @@
         ${table-alias}.multi_tab as `${column-prefix}multi_tab`,
         ${table-alias}.fixed_index_in_tab as `${column-prefix}fixed_index_in_tab`,
         ${table-alias}.query as `${column-prefix}query`,
-        ${table-alias}.buttons as `${column-prefix}buttons`,
         ${table-alias}.create_time as `${column-prefix}create_time`,
         ${table-alias}.modify_time as `${column-prefix}modify_time`,
         ${table-alias}.creator_id as `${column-prefix}creator_id`,

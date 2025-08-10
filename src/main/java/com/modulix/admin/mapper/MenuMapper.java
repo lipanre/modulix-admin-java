@@ -3,8 +3,10 @@ package com.modulix.admin.mapper;
 import com.github.yulichang.toolkit.JoinWrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.modulix.admin.domain.Button;
 import com.modulix.admin.domain.Menu;
 import com.modulix.admin.query.MenuQuery;
+import com.modulix.admin.vo.MenuButtonVO;
 import com.modulix.admin.vo.MenuVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 
@@ -42,6 +44,8 @@ public interface MenuMapper extends BaseMapper<Menu> {
     default MenuVO getDetail(Long id) {
         MPJLambdaWrapper<Menu> wrapper = MPJWrappers.lambdaJoin();
         wrapper.selectAll(Menu.class);
+        wrapper.selectCollection(Button.class, MenuVO::getButtons);
+        wrapper.leftJoin(Button.class, Button::getMenuId, Menu::getId);
         wrapper.eq(Menu::getId, id);
         return selectJoinOne(MenuVO.class, wrapper);
     }
@@ -58,8 +62,11 @@ public interface MenuMapper extends BaseMapper<Menu> {
     }
 
     /**
-     * 查询菜单按钮列表
+     * 查询符合条件的菜单按钮列表
+     *
+     * @param query 查询条件
+     * @return 菜单按钮列表
      */
-    List<Menu> listMenuButtons();
+    List<MenuButtonVO> listMenuButton(MenuQuery query);
 }
 

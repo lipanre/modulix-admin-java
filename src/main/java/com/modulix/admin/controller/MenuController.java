@@ -106,13 +106,14 @@ public class MenuController {
     }
 
     /**
-     * 查询菜单按钮列表
+     * 查询符合条件的菜单按钮列表
      *
      * @return 菜单按钮列表
      */
-    @GetMapping("/page-buttons")
-    public Response<List<MenuButtonVO>> listMenuButtons() {
-        return Response.success(menuService.listMenuButtons());
+    @GetMapping("/button")
+    public Response<List<MenuButtonVO>> listMenuButton(MenuQuery query) {
+        return Response.success(menuService.listMenuButton(query));
     }
+
 }
 

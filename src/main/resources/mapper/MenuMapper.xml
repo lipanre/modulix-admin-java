@@ -2,11 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.modulix.admin.mapper.MenuMapper">
 
+    <resultMap id="menu-button-vo-map" type="com.modulix.admin.vo.MenuButtonVO">
+        <id property="menuName" column="label" />
+        <collection property="buttons" ofType="com.modulix.admin.vo.ButtonVO">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+        </collection>
+    </resultMap>
 
-    <select id="listMenuButtons" resultMap="domain-map">
-        select label, buttons
-        from sys_menu
-        where json_length(buttons) > 0
+
+    <select id="listMenuButton" resultMap="menu-button-vo-map">
+        select sm.label, sb.name, sb.id
+        from sys_menu sm
+        join sys_button sb on sb.deleted = false and sb.menu_id = sm.id
+        where sm.deleted = false
+        <if test="menuIds != null and menuIds.size() != 0">
+            and sm.id in
+            <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+                #{menuId}
+            </foreach>
+        </if>
     </select>
 </mapper>
 

@@ -10,6 +10,8 @@ import io.github.linpeilie.annotations.AutoMappers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 
 /**
  * 菜单(Menu)实体类VO
@@ -26,6 +28,11 @@ import lombok.EqualsAndHashCode;
         @AutoMapper(target = MenuQuery.class),
 })
 public class MenuVO extends Menu {
+
+    /**
+     * 按钮列表
+     */
+    private List<ButtonVO> buttons;
 
 }
 

@@ -6,11 +6,12 @@
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="menuIds" column="menu_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
         <result property="deptIds" column="dept_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
-        <result property="buttons" column="buttons" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="buttonIds" column="button_ids" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
     </resultMap>
 
     <resultMap id="vo-map" type="com.modulix.admin.vo.RoleVO" autoMapping="true" extends="domain-map">
         <id property="id" column="id"/>
+        <collection property="buttons" columnPrefix="sb_" ofType="com.modulix.admin.vo.ButtonVO" resultMap="com.modulix.admin.mapper.ButtonMapper.vo-map" />
     </resultMap>
 
     <sql id="domain-sql">
@@ -18,7 +19,7 @@
         ${table-alias}.status as `${column-prefix}status`,
         ${table-alias}.name as `${column-prefix}name`,
         ${table-alias}.code as `${column-prefix}code`,
-        ${table-alias}.buttons as `${column-prefix}buttons`,
+        ${table-alias}.button_ids as `${column-prefix}button_ids`,
         ${table-alias}.menu_ids as `${column-prefix}menu_ids`,
         ${table-alias}.dept_ids as `${column-prefix}dept_ids`,
         ${table-alias}.description as `${column-prefix}description`,

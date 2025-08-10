@@ -6,7 +6,7 @@
     <select id="listDataScopes" resultType="com.modulix.framework.mybatis.plus.api.enums.DataScope">
         select sr.data_scope
         from sys_user su
-        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, sr.id)
+        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, cast(sr.id as char ))
         where su.id = #{userId}
     </select>
 
@@ -19,7 +19,7 @@
     <select id="getUserInfo" resultMap="userinfo-result-map">
         select su.id, su.username, sr.code
         from sys_user su
-        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, sr.id)
+        left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, json_quote(sr.id))
         where su.deleted = false and su.id = #{userId}
     </select>
 </mapper>

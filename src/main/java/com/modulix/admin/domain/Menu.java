@@ -155,18 +155,6 @@ public class Menu extends BaseDomain {
      */
     private String page;
 
-    /**
-     * 按钮列表
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<Button> buttons;
-
-    @Data
-    public static class Button {
-        private String code;
-        private String desc;
-    }
-
     @Data
     public static class Query {
         private String key;

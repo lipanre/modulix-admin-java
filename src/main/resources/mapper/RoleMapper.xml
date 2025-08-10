@@ -2,5 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.modulix.admin.mapper.RoleMapper">
 
+
+    <select id="getDetail" resultMap="vo-map">
+        select
+        <include refid="com.modulix.admin.mapper.RoleMapper.domain-sql">
+            <property name="table-alias" value="sr"/>
+            <property name="column-prefix" value=""/>
+        </include>
+        ,
+        <include refid="com.modulix.admin.mapper.ButtonMapper.domain-sql">
+            <property name="table-alias" value="sb"/>
+            <property name="column-prefix" value="sb_"/>
+        </include>
+        from sys_role sr
+                 left join sys_button sb on sb.deleted = false and json_contains(sr.button_ids, cast(sb.id as char ))
+        where sr.deleted = false
+          and sr.id = #{id}
+    </select>
 </mapper>
 

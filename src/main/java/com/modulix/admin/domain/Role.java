@@ -94,5 +94,5 @@ public class Role extends BaseDomain {
      * 可操作的按钮编码列表
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> buttons;
+    private List<Long> buttonIds;
 }

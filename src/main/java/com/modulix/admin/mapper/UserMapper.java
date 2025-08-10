@@ -49,6 +49,7 @@ public interface UserMapper extends BaseMapper<User> {
      */
     default UserVO getDetail(Long id) {
         MPJLambdaWrapper<User> wrapper = MPJWrappers.lambdaJoin(User.class);
+        wrapper.selectAll();
         wrapper.eq(User::getId, id);
         return selectJoinOne(UserVO.class, wrapper);
     }

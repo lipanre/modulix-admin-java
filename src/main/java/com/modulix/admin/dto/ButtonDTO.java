@@ -1,43 +1,31 @@
 package com.modulix.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.modulix.admin.domain.Menu;
-import com.modulix.admin.query.MenuQuery;
-import com.modulix.admin.vo.MenuVO;
+import com.modulix.admin.domain.Button;
+import com.modulix.admin.query.ButtonQuery;
+import com.modulix.admin.vo.ButtonVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseDomain;
 import io.github.linpeilie.annotations.AutoMapper;
 import io.github.linpeilie.annotations.AutoMappers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
 
 /**
- * 菜单(Menu)实体类DTO
+ * (Button)实体类DTO
  *
  * @author lipanre
- * @since 2025-07-28 22:51:57
+ * @since 2025-08-10 16:07:33
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({BaseDomain.Fields.creatorId, BaseDomain.Fields.modifierId, BaseDomain.Fields.deleted, BaseDomain.Fields.createTime, BaseDomain.Fields.modifyTime})
 @AutoMappers({
-        @AutoMapper(target = Menu.class),
-        @AutoMapper(target = MenuVO.class),
-        @AutoMapper(target = MenuQuery.class),
+        @AutoMapper(target = Button.class),
+        @AutoMapper(target = ButtonVO.class),
+        @AutoMapper(target = ButtonQuery.class),
 })
-public class MenuDTO extends Menu {
-
-    /**
-     * 删除的按钮id
-     */
-    private List<Long> deleteButtonIds;
-
-    /**
-     * 按钮
-     */
-    private List<ButtonDTO> buttons;
+public class ButtonDTO extends Button {
 
 }
 

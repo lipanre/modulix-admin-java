@@ -25,6 +25,6 @@ public class MenuButtonVO {
     /**
      * 按钮列表
      */
-    private List<Menu.Button> buttons;
+    private List<ButtonVO> buttons;
 
 }

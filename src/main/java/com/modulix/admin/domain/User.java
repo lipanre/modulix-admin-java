@@ -50,7 +50,6 @@ public class User extends BaseDomain {
      * 密码
      */
     @Length(max = 80, message = "密码(password)的长度不能超过{max}个字符", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
-    @NotEmpty(message = "密码(password)不能为空", groups = {ValidateGroup.Insert.class, ValidateGroup.Update.class})
     private String password;
 
     /**
