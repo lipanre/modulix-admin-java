@@ -2,8 +2,8 @@ package com.modulix.admin.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
-import com.modulix.admin.domain.login.AccountDTO;
-import com.modulix.admin.service.LoginService;
+import com.modulix.admin.dto.AuthDTO;
+import com.modulix.admin.service.AuthService;
 import com.modulix.admin.vo.LoginInfo;
 import com.modulix.admin.vo.UserInfo;
 import com.modulix.framework.web.aip.http.Response;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final LoginService loginService;
+    private final AuthService authService;
 
     /**
      * 用户名密码登录
@@ -29,8 +29,8 @@ public class AuthController {
      */
     @SaIgnore
     @PostMapping("/admin/login")
-    public Response<LoginInfo> login(@RequestBody AccountDTO dto) {
-        return Response.success(loginService.login(dto));
+    public Response<LoginInfo> login(@RequestBody AuthDTO dto) {
+        return Response.success(authService.login(dto));
     }
 
     /**
@@ -50,7 +50,7 @@ public class AuthController {
      */
     @PostMapping("/refresh")
     public Response<LoginInfo> refresh(@RequestBody LoginInfo loginInfo) {
-        return Response.success(loginService.refresh(loginInfo));
+        return Response.success(authService.refresh(loginInfo));
     }
 
     /**
@@ -60,7 +60,7 @@ public class AuthController {
      */
     @GetMapping("/user-info")
     public Response<UserInfo> getUserInfo() {
-        return Response.success(loginService.getUserInfo(StpUtil.getLoginIdAsLong()));
+        return Response.success(authService.getUserInfo(StpUtil.getLoginIdAsLong()));
     }
 
 }

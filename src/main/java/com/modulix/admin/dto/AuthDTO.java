@@ -1,14 +1,14 @@
-package com.modulix.admin.domain.login;
+package com.modulix.admin.dto;
 
 import lombok.Data;
 
 /**
- * 用户名登录dto
+ * 认证dto
  *
  * @author lipanre
  */
 @Data
-public class AccountDTO {
+public class AuthDTO {
 
     /**
      * 用户名
