@@ -13,11 +13,12 @@
     <resultMap id="userinfo-result-map" type="com.modulix.admin.vo.UserInfo">
         <id property="id" column="id" />
         <result property="username" column="username" />
+        <result property="superAdmin" column="super_admin" />
         <collection property="roles" column="code" ofType="java.lang.String"/>
     </resultMap>
 
     <select id="getUserInfo" resultMap="userinfo-result-map">
-        select su.id, su.username, sr.code
+        select su.id, su.username, sr.code, su.super_admin
         from sys_user su
         left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, json_quote(sr.id))
         where su.deleted = false and su.id = #{userId}

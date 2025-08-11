@@ -23,6 +23,11 @@ public class UserInfo {
     private String username;
 
     /**
+     * 是否是超级管理员
+     */
+    private Boolean superAdmin;
+
+    /**
      * 角色编码列表
      */
     private List<String> roles;
