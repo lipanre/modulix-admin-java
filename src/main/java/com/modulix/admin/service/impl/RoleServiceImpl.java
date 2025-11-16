@@ -3,6 +3,9 @@ package com.modulix.admin.service.impl;
 import com.modulix.admin.domain.Role;
 import com.modulix.admin.mapper.RoleMapper;
 import com.modulix.admin.service.RoleService;
+import com.modulix.framework.security.api.common.RoleCode;
+import com.modulix.framework.web.api.exception.BizException;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
 
     @Override
     public Boolean create(RoleDTO dto) {
+        if (CollectionUtils.containsAny(List.of(RoleCode.ADMIN_ROLE_CODE, RoleCode.SUPER_ADMIN_ROLE_CODE), dto.getCode())) {
+            throw new BizException("禁止创建系统内置角色编码角色");
+        }
         Role domain = converter.convert(dto, Role.class);
         return save(domain);
     }
@@ -40,6 +46,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean update(Long id, RoleDTO dto) {
+        if (CollectionUtils.containsAny(List.of(RoleCode.ADMIN_ROLE_CODE, RoleCode.SUPER_ADMIN_ROLE_CODE), dto.getCode())) {
+            throw new BizException("禁止更新系统内置角色");
+        }
         Role domain = converter.convert(dto, Role.class);
         domain.setId(id);
         return updateById(domain);

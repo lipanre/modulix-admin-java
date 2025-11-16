@@ -36,7 +36,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DeleteOperation(value = Dept.class, condition = "parent_id in #{#ids}")
+    @DeleteOperation(value = Dept.class, condition = "parent_id in (#{#ids})")
     public Boolean removeBatch(List<Long> ids) {
         return removeBatchByIds(ids);
     }
