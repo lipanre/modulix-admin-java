@@ -6,7 +6,7 @@ import com.modulix.admin.dto.AuthDTO;
 import com.modulix.admin.service.AuthService;
 import com.modulix.admin.vo.LoginInfo;
 import com.modulix.admin.vo.UserInfo;
-import com.modulix.framework.web.aip.http.Response;
+import com.modulix.framework.web.api.http.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

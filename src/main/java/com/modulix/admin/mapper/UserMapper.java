@@ -14,6 +14,7 @@ import com.modulix.framework.mybatis.plus.api.base.BaseMapper;
 import com.modulix.framework.mybatis.plus.api.enums.DataScope;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -75,7 +76,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 数据权限
      */
     @InterceptorIgnore(others = "page@true")
-    List<DataScope> listDataScopes(Long userId);
+    Set<DataScope> listDataScopes(Long userId);
 
     /**
      * 获取制定用户的用户信息
@@ -98,5 +99,22 @@ public interface UserMapper extends BaseMapper<User> {
         wrapper.eq(User::getId, userId);
         return selectJoinOne(Role.class, wrapper);
     }
+
+    /**
+     * 判断指定用户是否绑定了指定的路由
+     *
+     * @param userId 用户id
+     * @param path   路由路径
+     * @return 是否存在
+     */
+    Boolean isRouteExists(long userId, String path);
+
+    /**
+     * 查询指定用户绑定的角色编码列表
+     *
+     * @param userId 用户id
+     * @return 角色编码列表
+     */
+    Set<String> listRoleCode(Long userId);
 }
 

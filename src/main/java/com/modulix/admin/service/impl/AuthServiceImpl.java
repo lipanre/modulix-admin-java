@@ -10,7 +10,7 @@ import com.modulix.admin.service.AuthService;
 import com.modulix.admin.service.UserService;
 import com.modulix.admin.vo.LoginInfo;
 import com.modulix.admin.vo.UserInfo;
-import com.modulix.framework.web.aip.exception.BizException;
+import com.modulix.framework.web.api.exception.BizException;
 import io.github.linpeilie.Converter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

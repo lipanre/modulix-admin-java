@@ -6,7 +6,7 @@ import com.modulix.admin.service.DeptService;
 import com.modulix.admin.vo.DeptVO;
 import com.modulix.framework.mybatis.plus.api.annotation.PageRequest;
 import com.modulix.framework.validation.common.ValidateGroup;
-import com.modulix.framework.web.aip.http.Response;
+import com.modulix.framework.web.api.http.Response;
 import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;

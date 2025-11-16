@@ -23,5 +23,20 @@
         left join sys_role sr on sr.deleted = false and json_contains(su.role_ids, json_quote(sr.id))
         where su.deleted = false and su.id = #{userId}
     </select>
+
+    <select id="isRouteExists" resultType="java.lang.Boolean">
+        select count(*)
+        from sys_user su
+        join sys_role sr on sr.deleted = false and json_contains(su.role_ids, json_quote(sr.id))
+        join sys_menu sm on sm.deleted = false and json_contains(sr.menu_ids, json_quote(sm.id))
+        where su.deleted = false and su.id = #{userId} and sm.route_path = #{path}
+    </select>
+
+    <select id="listRoleCode" resultType="java.lang.String">
+        select  sr.code
+        from sys_user su
+        join sys_role sr on sr.deleted = false and json_contains(su.role_ids, json_quote(sr.id))
+        where su.deleted = false and su.id = #{userId}
+    </select>
 </mapper>
 

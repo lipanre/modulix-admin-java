@@ -1,11 +1,11 @@
 package com.modulix.admin.service;
 
-import com.modulix.admin.vo.UserInfo;
-import com.modulix.framework.mybatis.plus.api.base.BaseService;
 import com.modulix.admin.domain.User;
-import com.modulix.admin.vo.UserVO;
 import com.modulix.admin.dto.UserDTO;
 import com.modulix.admin.query.UserQuery;
+import com.modulix.admin.vo.UserInfo;
+import com.modulix.admin.vo.UserVO;
+import com.modulix.framework.mybatis.plus.api.base.BaseService;
 
 import java.util.List;
 
@@ -82,4 +82,13 @@ public interface UserService extends BaseService<User> {
      * @return 首页
      */
     String getUserHome(long userId);
+
+    /**
+     * 判断指定用户是否绑定了指定的路由
+     *
+     * @param userId 用户id
+     * @param path   路由路径
+     * @return 是否存在
+     */
+    Boolean isRouterExists(long userId, String path);
 }

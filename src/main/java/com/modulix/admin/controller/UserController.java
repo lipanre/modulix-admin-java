@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.admin.dto.UserDTO;
 import com.modulix.admin.query.UserQuery;
-import com.modulix.framework.web.aip.http.Response;
+import com.modulix.framework.web.api.http.Response;
 
 import java.util.List;
 

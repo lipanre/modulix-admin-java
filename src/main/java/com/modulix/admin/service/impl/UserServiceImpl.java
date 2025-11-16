@@ -11,7 +11,7 @@ import com.modulix.admin.vo.UserInfo;
 import com.modulix.admin.vo.UserVO;
 import com.modulix.framework.mybatis.plus.api.base.BaseServiceImpl;
 import com.modulix.framework.mybatis.plus.api.enums.DataScope;
-import com.modulix.framework.security.api.SecurityContext;
+import com.modulix.framework.security.api.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -29,7 +30,7 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService, SecurityContext {
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService, SecurityService {
 
 
     public static final String DEFAULT_HOME = "home";
@@ -88,7 +89,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public List<DataScope> getDataScopes(Long userId) {
+    public Boolean isRouterExists(long userId, String path) {
+        return baseMapper.isRouteExists(userId, path);
+    }
+
+    @Override
+    public Set<DataScope> getDataScopes(Long userId) {
         return baseMapper.listDataScopes(userId);
+    }
+
+    @Override
+    public Set<String> listRoleCode(Long userId) {
+        return baseMapper.listRoleCode(userId);
     }
 }

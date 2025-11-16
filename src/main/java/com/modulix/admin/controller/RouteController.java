@@ -5,10 +5,11 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.modulix.admin.service.RouterService;
 import com.modulix.admin.vo.RouteVO;
 import com.modulix.admin.vo.UserRouteVO;
-import com.modulix.framework.web.aip.http.Response;
+import com.modulix.framework.web.api.http.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -46,4 +47,15 @@ public class RouteController {
         return Response.success(routerService.listConstantRoute());
     }
 
+    /**
+     * 检查路由是否存在
+     *
+     * @param path 路由路径
+     * @return 是否存在
+     */
+    @SaIgnore
+    @GetMapping("/isRouteExist")
+    public Response<Boolean> isRouterExists(@RequestParam String path) {
+        return Response.success(routerService.isRouterExists(StpUtil.getLoginIdAsLong(), path));
+    }
 }

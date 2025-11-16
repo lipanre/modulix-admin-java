@@ -41,4 +41,9 @@ public class RouterServiceImpl implements RouterService {
     public List<RouteVO> listConstantRoute() {
         return menuMapper.listConstantRoute();
     }
+
+    @Override
+    public Boolean isRouterExists(long userId, String path) {
+        return userService.isRouterExists(userId, path);
+    }
 }

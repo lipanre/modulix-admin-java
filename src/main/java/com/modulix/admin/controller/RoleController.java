@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import com.modulix.admin.vo.RoleVO;
 import com.modulix.admin.dto.RoleDTO;
 import com.modulix.admin.query.RoleQuery;
-import com.modulix.framework.web.aip.http.Response;
+import com.modulix.framework.web.api.http.Response;
 
 import java.util.List;
 
